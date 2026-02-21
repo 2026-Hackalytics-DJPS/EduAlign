@@ -305,34 +305,45 @@ elif page == "Compare Colleges":
     st.markdown("Select 2-4 colleges to compare side by side.")
 
     df = get_colleges_df()
-    has_alumni = df[df[EXPERIENCE_DIMS[0]].notna()]
-    all_names = df["INSTNM"].dropna().sort_values().unique().tolist()
-    alumni_names = has_alumni["INSTNM"].sort_values().unique().tolist()
+    has_data = df[df[EXPERIENCE_DIMS[0]].notna()].copy()
+
+    # Create unique display names for colleges with duplicate INSTNM
+    dup_names = has_data["INSTNM"].value_counts()
+    dup_names = set(dup_names[dup_names > 1].index)
+    has_data["display_name"] = has_data.apply(
+        lambda r: f"{r['INSTNM']} ({r['CITY']}, {r['STABBR']})" if r["INSTNM"] in dup_names else r["INSTNM"],
+        axis=1,
+    )
+    display_to_unitid = dict(zip(has_data["display_name"], has_data["UNITID"].astype(int)))
+    display_names = sorted(has_data["display_name"].unique().tolist())
+
+    st.info(f"{len(display_names)} colleges available for comparison.")
 
     selected = st.multiselect(
-        "Choose colleges to compare (colleges with alumni data are recommended)",
-        all_names,
-        default=alumni_names[:2] if len(alumni_names) >= 2 else [],
+        "Choose colleges to compare",
+        display_names,
+        default=[],
         max_selections=4,
     )
 
     if len(selected) >= 2:
-        compare_df = df[df["INSTNM"].isin(selected)]
+        selected_uids = [display_to_unitid[n] for n in selected]
+        compare_df = has_data[has_data["UNITID"].astype(int).isin(selected_uids)]
 
         st.markdown("### Experience Profile Comparison")
-        has_profile = compare_df[compare_df[EXPERIENCE_DIMS[0]].notna()]
+        profile_df = compare_df[compare_df[EXPERIENCE_DIMS[0]].notna()]
 
-        if not has_profile.empty:
+        if not profile_df.empty:
             labels = [DIMENSION_LABELS[d] for d in EXPERIENCE_DIMS]
             labels_closed = labels + [labels[0]]
 
             fig = go.Figure()
-            for _, row in has_profile.iterrows():
+            for _, row in profile_df.iterrows():
                 vals = [float(row[d]) for d in EXPERIENCE_DIMS]
                 vals_closed = vals + [vals[0]]
                 fig.add_trace(go.Scatterpolar(
                     r=vals_closed, theta=labels_closed,
-                    fill="toself", name=row["INSTNM"],
+                    fill="toself", name=row["display_name"],
                     opacity=0.5,
                 ))
             fig.update_layout(
@@ -390,7 +401,7 @@ elif page == "Compare Colleges":
         metrics_cols = st.columns(len(selected))
         for i, (_, row) in enumerate(compare_df.iterrows()):
             with metrics_cols[i]:
-                st.markdown(f"**{row['INSTNM']}**")
+                st.markdown(f"**{row['display_name']}**")
                 adm = row.get("ADM_RATE")
                 grad = row.get("C150_4")
                 earn = row.get("MD_EARN_WNE_P10")

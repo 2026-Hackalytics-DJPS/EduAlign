@@ -9,7 +9,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from backend.auth import router as auth_router
-from backend.colleges import EXPERIENCE_DIMS, get_matches, load_merged_data
+from backend.colleges import EXPERIENCE_DIMS, get_matches, get_predictions, suggest_sliders, load_merged_data
 from backend.database import init_db
 from backend.financials import (
     budget_tracker,
@@ -41,9 +41,20 @@ def _get_colleges():
 # ── Request / Response Models ────────────────────────────────────────────────
 
 
+class StudentProfile(BaseModel):
+    gpa: Optional[float] = None
+    sat: Optional[int] = None
+    major: Optional[str] = None
+    location: Optional[str] = None
+    extracurriculars: Optional[str] = None
+    in_state_preference: Optional[bool] = None
+    free_text: Optional[str] = None
+
+
 class MatchRequest(BaseModel):
     preferences: dict
     top_n: int = 4
+    profile: Optional[StudentProfile] = None
 
 
 class FinancialPlanRequest(BaseModel):
@@ -75,6 +86,15 @@ class CompareRequest(BaseModel):
     on_campus: bool = True
 
 
+class PredictRequest(BaseModel):
+    profile: StudentProfile
+    unitids: list[int]
+
+
+class SuggestSlidersRequest(BaseModel):
+    profile: StudentProfile
+
+
 # ── Endpoints ────────────────────────────────────────────────────────────────
 
 
@@ -83,8 +103,13 @@ def api_match(req: MatchRequest):
     for dim in EXPERIENCE_DIMS:
         if dim not in req.preferences:
             raise HTTPException(400, f"Missing dimension: {dim}")
-    result = get_matches(req.preferences, req.top_n)
-    return {"matches": result["matches"]}
+    profile_dict = req.profile.model_dump(exclude_none=True) if req.profile else None
+    result = get_matches(req.preferences, req.top_n, profile=profile_dict)
+    matches = []
+    for m in result["matches"]:
+        m["INSTNM"] = m.pop("college_name", m.get("INSTNM", "Unknown"))
+        matches.append(m)
+    return {"matches": matches, "used_fallback": result.get("used_fallback", False)}
 
 
 @app.get("/api/colleges")
@@ -153,3 +178,18 @@ def api_compare(req: CompareRequest):
         if "error" not in cost:
             results.append(cost)
     return results
+
+
+@app.post("/api/predict")
+def api_predict(req: PredictRequest):
+    profile_dict = req.profile.model_dump(exclude_none=True)
+    if not req.unitids:
+        raise HTTPException(400, "At least one UNITID is required")
+    result = get_predictions(profile_dict, req.unitids)
+    return result
+
+
+@app.post("/api/suggest-sliders")
+def api_suggest_sliders(req: SuggestSlidersRequest):
+    profile_dict = req.profile.model_dump(exclude_none=True)
+    return {"suggested_sliders": suggest_sliders(profile_dict)}
