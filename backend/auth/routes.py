@@ -7,10 +7,12 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
+from backend.auth.apple_oauth import verify_apple_token
 from backend.auth.google_oauth import verify_google_token
 from backend.auth.jwt_ import create_access_token, decode_access_token
 from backend.auth.password import hash_password, is_valid_password, verify_password
 from backend.auth.user_queries import (
+    get_user_by_apple_id,
     get_user_by_google_id,
     get_user_by_id,
     get_user_by_username,
@@ -37,6 +39,10 @@ class LoginRequest(BaseModel):
 
 class GoogleLoginRequest(BaseModel):
     id_token: str = Field(..., description="Google OAuth2 ID token from frontend")
+
+
+class AppleLoginRequest(BaseModel):
+    id_token: str = Field(..., description="Sign in with Apple identity token from frontend")
 
 
 class TokenResponse(BaseModel):
@@ -141,6 +147,47 @@ def google_login(req: GoogleLoginRequest, db: Session = Depends(get_db)):
         username=username,
         email=email or None,
         google_id=google_id,
+        password_hash=None,
+    )
+    db.add(user)
+    db.commit()
+    db.refresh(user)
+
+    token = create_access_token(data={"sub": user.id, "username": user.username})
+    return TokenResponse(access_token=token, user=user.to_dict())
+
+
+@router.post("/apple", response_model=TokenResponse)
+def apple_login(req: AppleLoginRequest, db: Session = Depends(get_db)):
+    """Log in or sign up with Sign in with Apple. Send the Apple identity token from your frontend."""
+    payload = verify_apple_token(req.id_token)
+    if not payload:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid or expired Apple token. Check APPLE_CLIENT_ID and that the token is from your app.",
+        )
+
+    apple_id = payload.get("sub")
+    email = (payload.get("email") or "").strip()
+
+    user = get_user_by_apple_id(db, apple_id)
+    if user:
+        token = create_access_token(data={"sub": user.id, "username": user.username})
+        return TokenResponse(access_token=token, user=user.to_dict())
+
+    # New user: create account. Apple may not send name on subsequent requests.
+    base_username = (email.split("@")[0] if email else f"apple_{apple_id[:8]}").lower()
+    base_username = "".join(c for c in base_username if c.isalnum() or c in "._-") or "apple_user"
+    username = base_username
+    n = 0
+    while get_user_by_username(db, username):
+        n += 1
+        username = f"{base_username}{n}"
+
+    user = User(
+        username=username,
+        email=email or None,
+        apple_id=apple_id,
         password_hash=None,
     )
     db.add(user)

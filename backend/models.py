@@ -16,6 +16,7 @@ class User(Base):
     email = Column(String(256), unique=True, nullable=True, index=True)  # set for Google users
     password_hash = Column(String(256), nullable=True)  # null for Google-only users
     google_id = Column(String(256), unique=True, nullable=True, index=True)  # Google sub
+    apple_id = Column(String(256), unique=True, nullable=True, index=True)  # Apple sub
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     def to_dict(self):

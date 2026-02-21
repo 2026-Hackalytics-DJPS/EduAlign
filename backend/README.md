@@ -18,9 +18,12 @@ EduAlign’s backend is organized by **feature** so you can find and change code
 | **`password.py`** | Hash/verify passwords, password strength rules. |
 | **`jwt_.py`** | Create and decode JWT access tokens. |
 | **`google_oauth.py`** | Verify Google ID tokens for “Sign in with Google”. |
+| **`apple_oauth.py`** | Verify Sign in with Apple identity tokens (JWT via Apple JWKS). |
 | **`validation.py`** | Username format validation. |
-| **`user_queries.py`** | DB lookups: by username, Google ID, or user id. |
-| **`routes.py`** | FastAPI routes: `/api/auth/signup`, `/api/auth/login`, `/api/auth/google`, `/api/auth/me`, plus `get_current_user` dependency. |
+| **`user_queries.py`** | DB lookups: by username, Google ID, Apple ID, or user id. |
+| **`routes.py`** | FastAPI routes: `/api/auth/signup`, `/api/auth/login`, `/api/auth/google`, `/api/auth/apple`, `/api/auth/me`, plus `get_current_user` dependency. |
+
+Auth env: `JWT_SECRET`, `GOOGLE_CLIENT_ID` (Google OAuth), `APPLE_CLIENT_ID` (Sign in with Apple Services ID). If the `users` table already existed before Apple was added, add column: `ALTER TABLE users ADD COLUMN apple_id VARCHAR(256) UNIQUE;` (or recreate the DB).
 
 ### `colleges/` — College data and matching
 
