@@ -1,6 +1,8 @@
 """
 Generate synthetic alumni experience ratings for 20 well-known colleges.
 Each college has a hand-tuned base profile; individual entries get +/-1 jitter.
+
+Run from project root: python -m backend.scripts.seed_alumni
 """
 
 import os
@@ -89,7 +91,8 @@ def generate_alumni_ratings(n=100):
 
 
 if __name__ == "__main__":
-    out_path = os.path.join(os.path.dirname(__file__), "..", "data", "raw", "alumni_ratings.csv")
+    # backend/scripts -> project root -> data/raw
+    out_path = os.path.join(os.path.dirname(__file__), "..", "..", "data", "raw", "alumni_ratings.csv")
     df = generate_alumni_ratings(100)
     df.to_csv(out_path, index=False)
     print(f"Shape: {df.shape}")

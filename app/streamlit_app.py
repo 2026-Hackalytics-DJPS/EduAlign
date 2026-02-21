@@ -16,13 +16,12 @@ import plotly.graph_objects as go
 import streamlit as st
 import pandas as pd
 
-from backend.preprocessing import EXPERIENCE_DIMS, load_merged_data
-from backend.matching import get_matches
+from backend.colleges import EXPERIENCE_DIMS, get_matches, load_merged_data
 from backend.financials import (
-    estimate_semester_cost,
-    graduation_plan,
-    find_alternatives,
     budget_tracker,
+    estimate_semester_cost,
+    find_alternatives,
+    graduation_plan,
 )
 
 DIMENSION_LABELS = {

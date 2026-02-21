@@ -8,4 +8,8 @@ plotly
 requests
 python-dotenv
 google-generativeai
+google-auth
 nltk
+passlib[bcrypt]
+python-jose[cryptography]
+sqlalchemy

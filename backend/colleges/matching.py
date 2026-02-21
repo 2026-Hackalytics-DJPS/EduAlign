@@ -13,7 +13,7 @@ import google.generativeai as genai
 import pandas as pd
 from dotenv import load_dotenv
 
-from backend.preprocessing import EXPERIENCE_DIMS, load_merged_data
+from backend.colleges.preprocessing import EXPERIENCE_DIMS, load_merged_data
 
 load_dotenv()
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))

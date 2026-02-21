@@ -1,15 +1,12 @@
 """
-Financial planning module for EduAlign.
-
-Calculates semester costs, graduation plans, budget feasibility,
-and finds alternative colleges within a student's budget.
+Financial planning: semester costs, graduation plans, budget tracking, alternatives.
 """
 
 import math
 
 import pandas as pd
 
-from backend.preprocessing import load_merged_data
+from backend.colleges.preprocessing import load_merged_data
 
 
 def _load_colleges() -> pd.DataFrame:

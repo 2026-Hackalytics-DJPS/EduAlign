@@ -8,16 +8,25 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
+from backend.auth import router as auth_router
+from backend.colleges import EXPERIENCE_DIMS, get_matches, load_merged_data
+from backend.database import init_db
 from backend.financials import (
     budget_tracker,
     estimate_semester_cost,
     find_alternatives,
     graduation_plan,
 )
-from backend.matching import get_matches
-from backend.preprocessing import EXPERIENCE_DIMS, load_merged_data
 
 app = FastAPI(title="EduAlign API", version="0.1.0")
+
+# Auth: signup, login, Google login
+app.include_router(auth_router)
+
+
+@app.on_event("startup")
+def startup():
+    init_db()
 
 _colleges_df = None
 

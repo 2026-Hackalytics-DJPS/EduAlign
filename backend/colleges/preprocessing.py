@@ -13,7 +13,8 @@ import os
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
-BASE_DIR = os.path.join(os.path.dirname(__file__), "..")
+# Project root (backend/colleges -> backend -> project root)
+BASE_DIR = os.path.join(os.path.dirname(__file__), "..", "..")
 RAW_DIR = os.path.join(BASE_DIR, "data", "raw")
 CLEANED_DIR = os.path.join(BASE_DIR, "data", "cleaned")
 

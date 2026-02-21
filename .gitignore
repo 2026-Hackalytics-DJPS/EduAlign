@@ -36,3 +36,7 @@ Thumbs.db
 
 # Environment variables
 .env
+
+# Local SQLite DB (auth users)
+*.db
+edualign.db
