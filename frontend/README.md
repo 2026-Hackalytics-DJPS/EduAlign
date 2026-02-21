@@ -35,8 +35,6 @@ npm run build
 
 Output is in `dist/`. Serve with any static host or point your backend at `dist/index.html` for production.
 
-## Stack
+## Logo
 
-- React 18, TypeScript, Vite 5
-- react-router-dom (routes)
-- react-plotly.js + plotly.js (radar, bar, grouped bar charts)
+Place your main EduAlign logo (e.g. graduation cap + “EduAlign” text) at **`frontend/public/logo.png`**. It is used in the sidebar, login page, signup page, and forgot-password page. Use a transparent or light-colored version if the logo will appear on the dark sidebar.

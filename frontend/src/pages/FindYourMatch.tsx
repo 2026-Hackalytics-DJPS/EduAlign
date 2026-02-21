@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { EXPERIENCE_DIMS, DIMENSION_LABELS } from "../constants";
 import type { Preferences } from "../types";
 import type { MatchItem } from "../types";

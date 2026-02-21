@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { getColleges, getCollegeDetail, postCompare } from "../api";
-import type { CollegeListItem, CollegeDetail, CostResult } from "../types";
+import type { CollegeDetail, CostResult } from "../types";
 import { EXPERIENCE_DIMS, DIMENSION_LABELS } from "../constants";
 import { RadarChart } from "../components/RadarChart";
 import { GroupedBarChart } from "../components/GroupedBarChart";
@@ -11,7 +11,6 @@ interface CollegeOption {
 }
 
 export function CompareColleges() {
-  const [colleges, setColleges] = useState<CollegeListItem[]>([]);
   const [options, setOptions] = useState<CollegeOption[]>([]);
   const [displayToUnitid, setDisplayToUnitid] = useState<Record<string, number>>({});
   const [selected, setSelected] = useState<string[]>([]);
@@ -23,7 +22,6 @@ export function CompareColleges() {
 
   useEffect(() => {
     getColleges("", "", 3000).then((list) => {
-      setColleges(list);
       const nameCounts: Record<string, number> = {};
       list.forEach((c) => {
         nameCounts[c.INSTNM] = (nameCounts[c.INSTNM] ?? 0) + 1;
@@ -47,7 +45,10 @@ export function CompareColleges() {
   }, []);
 
   const selectedUnitids = useMemo(
-    () => selected.map((d) => displayToUnitid[d]).filter(Boolean),
+    (): number[] =>
+      selected
+        .map((d) => displayToUnitid[d])
+        .filter((id): id is number => typeof id === "number"),
     [selected, displayToUnitid]
   );
 
@@ -107,10 +108,12 @@ export function CompareColleges() {
         }))
       : [];
 
-  const compareRows = selectedUnitids
+  const compareRows: CollegeOption[] = selectedUnitids
     .map((uid) => options.find((o) => o.unitid === uid))
-    .filter(Boolean) as CollegeOption[];
-  const detailRows = compareRows.map((r) => details[r.unitid]).filter(Boolean);
+    .filter((o): o is CollegeOption => o != null);
+  const detailRows: CollegeDetail[] = compareRows
+    .map((r) => details[r.unitid])
+    .filter((d): d is CollegeDetail => d != null);
 
   return (
     <div className="page compare-colleges">
@@ -237,29 +240,32 @@ export function CompareColleges() {
           <section>
             <h2>Key Metrics</h2>
             <div className="metrics-grid">
-              {detailRows.map((row, i) => (
-                <div key={compareRows[i]?.unitid ?? i} className="metric-card">
-                  <h3>{compareRows[i]?.displayName ?? "—"}</h3>
-                  <p>
-                    Admission Rate:{" "}
-                    {row.ADM_RATE != null
-                      ? `${(Number(row.ADM_RATE) * 100).toFixed(0)}%`
-                      : "N/A"}
-                  </p>
-                  <p>
-                    Graduation Rate:{" "}
-                    {row.C150_4 != null
-                      ? `${(Number(row.C150_4) * 100).toFixed(0)}%`
-                      : "N/A"}
-                  </p>
-                  <p>
-                    Median Earnings (10yr):{" "}
-                    {row.MD_EARN_WNE_P10 != null
-                      ? `$${Number(row.MD_EARN_WNE_P10).toLocaleString()}`
-                      : "N/A"}
-                  </p>
-                </div>
-              ))}
+              {detailRows.map((row, i) => {
+                const opt = compareRows[i];
+                return (
+                  <div key={opt?.unitid ?? i} className="metric-card">
+                    <h3>{opt?.displayName ?? "—"}</h3>
+                    <p>
+                      Admission Rate:{" "}
+                      {row.ADM_RATE != null
+                        ? `${(Number(row.ADM_RATE) * 100).toFixed(0)}%`
+                        : "N/A"}
+                    </p>
+                    <p>
+                      Graduation Rate:{" "}
+                      {row.C150_4 != null
+                        ? `${(Number(row.C150_4) * 100).toFixed(0)}%`
+                        : "N/A"}
+                    </p>
+                    <p>
+                      Median Earnings (10yr):{" "}
+                      {row.MD_EARN_WNE_P10 != null
+                        ? `$${Number(row.MD_EARN_WNE_P10).toLocaleString()}`
+                        : "N/A"}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </section>
         </>

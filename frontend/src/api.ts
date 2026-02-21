@@ -1,21 +1,71 @@
+import { getStoredToken } from "./contexts/AuthContext";
+
 const API_BASE = "";
 
 async function fetchApi<T>(
   path: string,
   options: RequestInit = {}
 ): Promise<T> {
+  const token = getStoredToken();
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+    ...options.headers,
+  };
+  if (token) {
+    (headers as Record<string, string>)["Authorization"] = `Bearer ${token}`;
+  }
   const res = await fetch(`${API_BASE}${path}`, {
     ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
+    headers,
   });
   if (!res.ok) {
     const text = await res.text();
     throw new Error(text || `HTTP ${res.status}`);
   }
   return res.json() as Promise<T>;
+}
+
+// ── Auth ───────────────────────────────────────────────────────────────────
+
+export interface AuthUser {
+  id: number;
+  username: string;
+  email?: string | null;
+  created_at?: string | null;
+}
+
+export interface TokenResponse {
+  access_token: string;
+  token_type: string;
+  user: AuthUser;
+}
+
+export async function postLogin(username: string, password: string) {
+  return fetchApi<TokenResponse>("/api/auth/login", {
+    method: "POST",
+    body: JSON.stringify({ username, password }),
+  });
+}
+
+export async function postSignup(username: string, password: string) {
+  return fetchApi<TokenResponse>("/api/auth/signup", {
+    method: "POST",
+    body: JSON.stringify({ username, password }),
+  });
+}
+
+export async function postGoogleLogin(idToken: string) {
+  return fetchApi<TokenResponse>("/api/auth/google", {
+    method: "POST",
+    body: JSON.stringify({ id_token: idToken }),
+  });
+}
+
+export async function postAppleLogin(idToken: string) {
+  return fetchApi<TokenResponse>("/api/auth/apple", {
+    method: "POST",
+    body: JSON.stringify({ id_token: idToken }),
+  });
 }
 
 export interface MatchPayload {

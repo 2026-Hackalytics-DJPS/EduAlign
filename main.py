@@ -6,6 +6,7 @@ from typing import Optional
 
 import pandas as pd
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from backend.auth import router as auth_router
@@ -19,6 +20,15 @@ from backend.financials import (
 )
 
 app = FastAPI(title="EduAlign API", version="0.1.0")
+
+# CORS so the React frontend can call the API (dev on :5173 or production)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Auth: signup, login, Google login
 app.include_router(auth_router)

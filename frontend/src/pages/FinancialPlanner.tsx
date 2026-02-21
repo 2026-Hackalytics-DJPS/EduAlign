@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getColleges, postFinancialPlan, postAlternatives, postBudgetTracker } from "../api";
 import type { CollegeListItem } from "../types";
 import type { FinancialPlan, AlternativeRow, BudgetTrackerResult } from "../types";

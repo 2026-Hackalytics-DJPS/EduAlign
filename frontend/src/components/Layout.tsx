@@ -1,5 +1,6 @@
-import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { EduAlignLogo } from "./EduAlignLogo";
 
 const nav = [
   { to: "/", label: "Find Your Match" },
@@ -8,13 +9,28 @@ const nav = [
 ];
 
 export function Layout() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login", { replace: true });
+  };
+
   return (
     <div className="app-layout">
       <aside className="sidebar">
-        <div className="sidebar-brand">EduAlign</div>
+        <div className="sidebar-brand">
+          <EduAlignLogo height={36} dark />
+        </div>
         <p className="sidebar-tagline">
           Find colleges that match your experience, not just your stats.
         </p>
+        {user && (
+          <p className="sidebar-user" style={{ fontSize: "0.8rem", opacity: 0.8, marginBottom: "0.5rem" }}>
+            {user.username}
+          </p>
+        )}
         <nav className="sidebar-nav">
           {nav.map(({ to, label }) => (
             <NavLink
@@ -29,6 +45,14 @@ export function Layout() {
             </NavLink>
           ))}
         </nav>
+        <button
+          type="button"
+          className="nav-link"
+          style={{ marginTop: "auto", textAlign: "left", background: "none", border: "none", color: "inherit" }}
+          onClick={handleLogout}
+        >
+          Sign out
+        </button>
       </aside>
       <main className="main">
         <Outlet />

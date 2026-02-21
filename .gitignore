@@ -40,3 +40,7 @@ Thumbs.db
 # Local SQLite DB (auth users)
 *.db
 edualign.db
+
+# Frontend
+frontend/node_modules/
+frontend/dist/

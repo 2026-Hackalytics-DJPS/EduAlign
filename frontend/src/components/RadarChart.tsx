@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import Plot from "react-plotly.js";
 import { EXPERIENCE_DIMS } from "../constants";
 import type { ExperienceDim } from "../constants";
