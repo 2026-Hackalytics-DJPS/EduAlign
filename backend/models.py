@@ -32,11 +32,18 @@ class User(Base):
     profile_complete = Column(Boolean, default=False)
 
     def to_dict(self):
+        created_at = self.created_at
+        if created_at is None:
+            created_at_str = None
+        elif hasattr(created_at, "isoformat"):
+            created_at_str = created_at.isoformat()
+        else:
+            created_at_str = str(created_at)
         return {
             "id": self.id,
             "username": self.username,
             "email": self.email,
-            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "created_at": created_at_str,
             "is_admin": bool(self.is_admin),
             "profile_complete": bool(self.profile_complete),
             "gpa": self.gpa,

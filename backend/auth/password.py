@@ -1,9 +1,10 @@
-"""Password hashing and strength validation."""
+"""Password hashing and strength validation. Uses bcrypt directly to avoid passlib/bcrypt version issues."""
 
 import re
-from passlib.context import CryptContext
+import bcrypt
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# bcrypt has a 72-byte limit; we truncate to avoid ValueError
+BCRYPT_MAX_BYTES = 72
 
 PASSWORD_MIN_LENGTH = 8
 PASSWORD_REQUIREMENTS = (
@@ -12,12 +13,22 @@ PASSWORD_REQUIREMENTS = (
 )
 
 
+def _to_bytes(password: str) -> bytes:
+    secret = password.encode("utf-8")
+    if len(secret) > BCRYPT_MAX_BYTES:
+        secret = secret[:BCRYPT_MAX_BYTES]
+    return secret
+
+
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    return bcrypt.hashpw(_to_bytes(password), bcrypt.gensalt()).decode("utf-8")
 
 
 def verify_password(plain: str, hashed: str) -> bool:
-    return pwd_context.verify(plain, hashed)
+    try:
+        return bcrypt.checkpw(_to_bytes(plain), hashed.encode("utf-8"))
+    except Exception:
+        return False
 
 
 def is_valid_password(password: str) -> tuple[bool, str]:

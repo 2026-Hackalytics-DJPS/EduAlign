@@ -2,6 +2,26 @@ import { getStoredToken } from "./contexts/AuthContext";
 
 const API_BASE = "";
 
+/** Extract a short, user-friendly message from FastAPI-style error JSON. */
+function parseErrorDetail(text: string): string | null {
+  if (!text || !text.trim()) return null;
+  const trimmed = text.trim();
+  if (trimmed.startsWith("{")) {
+    try {
+      const data = JSON.parse(trimmed) as { detail?: string | unknown[] };
+      const d = data.detail;
+      if (typeof d === "string") return d;
+      if (Array.isArray(d) && d.length > 0) {
+        const first = d[0];
+        if (first && typeof first === "object" && "msg" in first) return String((first as { msg: string }).msg);
+      }
+    } catch {
+      /* ignore parse errors */
+    }
+  }
+  return null;
+}
+
 async function fetchApi<T>(
   path: string,
   options: RequestInit = {}
@@ -20,7 +40,8 @@ async function fetchApi<T>(
   });
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(text || `HTTP ${res.status}`);
+    const message = parseErrorDetail(text) || text || `Request failed (${res.status})`;
+    throw new Error(message);
   }
   return res.json() as Promise<T>;
 }
