@@ -159,4 +159,12 @@ module.exports = {
         ].join(' ')
     },
     editType: 'plot',
+
+    _deprecated: {
+        cameraposition: {
+            valType: 'info_array',
+            editType: 'camera',
+            description: 'Obsolete. Use `camera` instead.'
+        }
+    }
 };

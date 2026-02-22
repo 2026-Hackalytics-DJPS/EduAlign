@@ -12,6 +12,12 @@ Plotly.register([
     require('./cone'),
     require('./streamtube'),
 
+    // transforms
+    require('./aggregate'),
+    require('./filter'),
+    require('./groupby'),
+    require('./sort'),
+
     // components
     require('./calendars'),
 ]);

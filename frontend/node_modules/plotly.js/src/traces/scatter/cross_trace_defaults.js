@@ -7,7 +7,6 @@ var attributes = require('./attributes');
 // remove opacity for any trace that has a fill or is filled to
 module.exports = function crossTraceDefaults(fullData, fullLayout) {
     var traceIn, traceOut, i;
-    var scattermode = fullLayout.scattermode;
 
     function coerce(attr) {
         return Lib.coerce(traceOut._input, traceOut, attributes, attr);
@@ -16,10 +15,10 @@ module.exports = function crossTraceDefaults(fullData, fullLayout) {
     if(fullLayout.scattermode === 'group') {
         for(i = 0; i < fullData.length; i++) {
             traceOut = fullData[i];
-    
+
             if(traceOut.type === 'scatter') {
                 traceIn = traceOut._input;
-                handleGroupingDefaults(traceIn, traceOut, fullLayout, coerce, scattermode);
+                handleGroupingDefaults(traceIn, traceOut, fullLayout, coerce);
             }
         }
     }

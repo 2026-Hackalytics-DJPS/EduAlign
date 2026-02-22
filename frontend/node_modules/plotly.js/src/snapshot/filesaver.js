@@ -23,6 +23,16 @@ function fileSaver(url, name, format) {
         var blob;
         var objectUrl;
 
+        // IE 10+ (native saveAs)
+        if(Lib.isIE()) {
+            // At this point we are only dealing with a decoded SVG as
+            // a data URL (since IE only supports SVG)
+            blob = helpers.createBlob(url, 'svg');
+            window.navigator.msSaveBlob(blob, name);
+            blob = null;
+            return resolve(name);
+        }
+
         if(canUseSaveLink) {
             blob = helpers.createBlob(url, format);
             objectUrl = helpers.createObjectURL(blob);

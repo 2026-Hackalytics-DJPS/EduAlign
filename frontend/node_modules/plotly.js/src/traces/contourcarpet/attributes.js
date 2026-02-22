@@ -71,6 +71,7 @@ module.exports = extendFlat({
     },
 
     zorder: contourAttrs.zorder,
+    transforms: undefined
 },
 
     colorScaleAttrs('', {

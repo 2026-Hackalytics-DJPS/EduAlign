@@ -32,6 +32,8 @@ Plotly.register([
     require('./choropleth'),
     require('./scattergl'),
     require('./splom'),
+    require('./pointcloud'),
+    require('./heatmapgl'),
     require('./parcoords'),
     require('./parcats'),
     require('./scattermapbox'),
@@ -52,6 +54,12 @@ Plotly.register([
     require('./scatterpolargl'),
     require('./barpolar'),
     require('./scattersmith'),
+
+    // transforms
+    require('./aggregate'),
+    require('./filter'),
+    require('./groupby'),
+    require('./sort'),
 
     // components
     require('./calendars'),

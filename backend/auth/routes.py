@@ -1,5 +1,7 @@
 """FastAPI auth routes: signup, login, Google login, and /me."""
 
+import logging
+import os
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -75,6 +77,9 @@ def get_current_user(user: Optional[User] = Depends(get_current_user_optional)) 
 
 # ── Routes ─────────────────────────────────────────────────────────────────
 
+logger = logging.getLogger(__name__)
+
+
 @router.post("/signup", response_model=TokenResponse)
 def signup(req: SignupRequest, db: Session = Depends(get_db)):
     """Create account with username and password."""
@@ -91,16 +96,32 @@ def signup(req: SignupRequest, db: Session = Depends(get_db)):
     if existing:
         raise HTTPException(status_code=400, detail="Username already taken.")
 
-    user = User(
-        username=req.username,
-        password_hash=hash_password(req.password),
-    )
-    db.add(user)
-    db.commit()
-    db.refresh(user)
+    try:
+        user = User(
+            username=req.username,
+            password_hash=hash_password(req.password),
+        )
+        db.add(user)
+        db.commit()
+        db.refresh(user)
 
-    token = create_access_token(data={"sub": str(user.id), "username": user.username})
-    return TokenResponse(access_token=token, user=user.to_dict())
+        token = create_access_token(data={"sub": str(user.id), "username": user.username})
+        return TokenResponse(access_token=token, user=user.to_dict())
+    except Exception as e:
+        db.rollback()
+        logger.exception("Signup failed: %s", e)
+        detail = "Account creation failed. Please try again or contact support."
+        err_msg = str(e).strip()
+        # Surface DB/setup errors so they can be fixed (e.g. no such table, unique constraint)
+        if hasattr(e, "__class__") and e.__class__.__name__ in (
+            "OperationalError",
+            "IntegrityError",
+            "ProgrammingError",
+        ):
+            detail += f" ({err_msg})"
+        elif os.getenv("DEBUG") or os.getenv("EDUALIGN_DEBUG"):
+            detail += f" ({type(e).__name__}: {err_msg})"
+        raise HTTPException(status_code=500, detail=detail) from e
 
 
 @router.post("/login", response_model=TokenResponse)

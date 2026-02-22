@@ -14,6 +14,12 @@ Plotly.register([
     require('./ohlc'),
     require('./candlestick'),
 
+    // transforms
+    require('./aggregate'),
+    require('./filter'),
+    require('./groupby'),
+    require('./sort'),
+
     // components
     require('./calendars'),
 ]);

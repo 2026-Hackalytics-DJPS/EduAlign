@@ -115,5 +115,6 @@ module.exports = {
             'Individual pieces can override this.'
         ].join(' ')
     },
+    transforms: undefined,
     zorder: zorder
 };

@@ -16,6 +16,12 @@ Plotly.register([
     require('./image'),
     require('./pie'),
 
+    // transforms
+    require('./aggregate'),
+    require('./filter'),
+    require('./groupby'),
+    require('./sort'),
+
     // components
     require('./calendars'),
 ]);

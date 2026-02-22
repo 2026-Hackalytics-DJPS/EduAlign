@@ -7,6 +7,12 @@ Plotly.register([
     require('./scattergeo'),
     require('./choropleth'),
 
+    // transforms
+    require('./aggregate'),
+    require('./filter'),
+    require('./groupby'),
+    require('./sort'),
+
     // components
     require('./calendars'),
 ]);

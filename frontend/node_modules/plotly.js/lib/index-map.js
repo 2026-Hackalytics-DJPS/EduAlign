@@ -8,6 +8,12 @@ Plotly.register([
     require('./choroplethmap'),
     require('./densitymap'),
 
+    // transforms
+    require('./aggregate'),
+    require('./filter'),
+    require('./groupby'),
+    require('./sort'),
+
     // components
     require('./calendars'),
 ]);

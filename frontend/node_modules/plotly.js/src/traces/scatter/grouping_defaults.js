@@ -2,7 +2,7 @@
 
 var getAxisGroup = require('../../plots/cartesian/constraints').getAxisGroup;
 
-module.exports = function handleGroupingDefaults(traceIn, traceOut, fullLayout, coerce, barmode) {
+module.exports = function handleGroupingDefaults(traceIn, traceOut, fullLayout, coerce) {
     var orientation = traceOut.orientation;
     // N.B. grouping is done across all trace types that support it
     var posAxId = traceOut[{v: 'x', h: 'y'}[orientation] + 'axis'];
@@ -26,13 +26,11 @@ module.exports = function handleGroupingDefaults(traceIn, traceOut, fullLayout, 
         };
     }
 
-    var offsetgroup = coerce('offsetgroup') || '';
+    var offsetgroup = coerce('offsetgroup');
     var offsetGroups = alignmentGroupOpts.offsetGroups;
     var offsetGroupOpts = offsetGroups[offsetgroup];
-    // in barmode 'group', traces without offsetgroup receive their own offsetgroup
-    // in other barmodes, traces without offsetgroup are assigned to the same offset group
-    traceOut._offsetIndex = 0;
-    if(barmode !== 'group' || offsetgroup) {
+
+    if(offsetgroup) {
         if(!offsetGroupOpts) {
             offsetGroupOpts = offsetGroups[offsetgroup] = {
                 offsetIndex: Object.keys(offsetGroups).length
