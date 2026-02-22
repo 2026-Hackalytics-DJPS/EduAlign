@@ -12,6 +12,7 @@ import { SvgRadar } from "../components/SvgRadar";
 import { GroupedBarChart } from "../components/GroupedBarChart";
 import { CollegeDropdown } from "../components/CollegeDropdown";
 import { useAuth } from "../contexts/AuthContext";
+import { Heart, CheckCircle2 } from "lucide-react";
 import "./CompareColleges.css";
 
 const RADAR_COLORS = [
@@ -235,11 +236,11 @@ export function CompareColleges() {
                 {c.INSTNM}
                 <button
                   type="button"
-                  style={{ background: "none", border: "none", cursor: "pointer", fontSize: "0.85rem", padding: "0 2px" }}
+                  style={{ background: "none", border: "none", cursor: "pointer", padding: "0 2px", color: "rgba(0,0,0,0.35)", display: "inline-flex" }}
                   title="Save to My Colleges"
                   onClick={() => saveCollege(c.UNITID, "target").catch(() => {})}
                 >
-                  🤍
+                  <Heart size={14} />
                 </button>
                 <button type="button" className="cc-pill-x" onClick={() => removeCollege(c.UNITID)}>
                   &times;
@@ -274,7 +275,7 @@ export function CompareColleges() {
                   } catch {}
                 }}
               >
-                {compSaved ? "✓ Saved" : "Save Comparison"}
+                {compSaved ? <><CheckCircle2 size={14} style={{ verticalAlign: -2, marginRight: 4 }} />Saved</> : "Save Comparison"}
               </button>
             </div>
 

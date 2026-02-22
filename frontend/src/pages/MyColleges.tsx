@@ -16,6 +16,9 @@ import type {
   SavedComparisonRow,
   MatchHistoryRow,
 } from "../api";
+import {
+  GraduationCap, BarChart3, Search, Crosshair, GitCompareArrows,
+} from "lucide-react";
 import "./MyColleges.css";
 
 type Tab = "colleges" | "plans" | "history" | "comparisons";
@@ -97,7 +100,7 @@ export function MyColleges() {
     if (colleges.length === 0) {
       return (
         <div className="my-empty">
-          <div className="my-empty-icon">🎓</div>
+          <div className="my-empty-icon"><GraduationCap size={28} /></div>
           <div>No saved colleges yet.</div>
           <div style={{ marginTop: "0.5rem", fontSize: "0.85rem" }}>
             Heart colleges from your match results, financial planner, or comparisons to build your list.
@@ -196,7 +199,7 @@ export function MyColleges() {
     if (plans.length === 0) {
       return (
         <div className="my-empty">
-          <div className="my-empty-icon">📊</div>
+          <div className="my-empty-icon"><BarChart3 size={28} /></div>
           <div>No saved financial plans.</div>
           <div style={{ marginTop: "0.5rem", fontSize: "0.85rem" }}>
             Run a financial plan and click "Save this plan" to keep it here.
@@ -251,7 +254,7 @@ export function MyColleges() {
     if (history.length === 0) {
       return (
         <div className="my-empty">
-          <div className="my-empty-icon">🔍</div>
+          <div className="my-empty-icon"><Search size={28} /></div>
           <div>No match searches yet.</div>
           <div style={{ marginTop: "0.5rem", fontSize: "0.85rem" }}>
             Run a match search on "Find Your Match" and your history will appear here.
@@ -268,7 +271,7 @@ export function MyColleges() {
 
       return (
         <div key={h.id} className="my-match-card">
-          <div className="my-match-icon">🎯</div>
+          <div className="my-match-icon"><Crosshair size={18} /></div>
           <div className="my-match-info">
             <div className="my-match-college">{college}</div>
             <div className="my-match-date">
@@ -292,7 +295,7 @@ export function MyColleges() {
     if (comparisons.length === 0) {
       return (
         <div className="my-empty">
-          <div className="my-empty-icon">⚖️</div>
+          <div className="my-empty-icon"><GitCompareArrows size={28} /></div>
           <div>No saved comparisons.</div>
           <div style={{ marginTop: "0.5rem", fontSize: "0.85rem" }}>
             Compare colleges side-by-side and click "Save Comparison" to keep it here.

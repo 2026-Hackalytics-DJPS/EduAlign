@@ -56,6 +56,7 @@ export interface AuthUser {
   is_admin?: boolean;
   profile_complete?: boolean;
   gpa?: number | null;
+  sat?: number | null;
   intended_major?: string | null;
   preferred_state?: string | null;
   school_size?: string | null;

@@ -3,6 +3,8 @@ import { EXPERIENCE_DIMS, DIMENSION_LABELS } from "../constants";
 import type { Preferences, MatchItem, StudentProfile } from "../types";
 import { postMatch, postSuggestSliders } from "../api";
 import { CollegeCard } from "../components/CollegeCard";
+import { useAuth } from "../contexts/AuthContext";
+import { Crosshair, Search, Brain, Sparkles, Zap, WandSparkles, Check } from "lucide-react";
 import "./MatchPage.css";
 
 const initialPrefs: Preferences = Object.fromEntries(
@@ -54,10 +56,10 @@ const SCHOOL_SIZES = ["Small (<5k)", "Medium (5k–15k)", "Large (15k+)"];
 const STEP_LABELS = ["About You", "Preferences", "Your Vibe"];
 
 const LOADING_STAGES = [
-  { text: "Analyzing your preferences", icon: "🎯" },
-  { text: "Scanning 6,000+ colleges", icon: "🔍" },
-  { text: "Running AI matching engine", icon: "🧠" },
-  { text: "Generating personalized insights", icon: "✨" },
+  { text: "Analyzing your preferences", icon: <Crosshair size={28} /> },
+  { text: "Scanning 6,000+ colleges", icon: <Search size={28} /> },
+  { text: "Running AI matching engine", icon: <Brain size={28} /> },
+  { text: "Generating personalized insights", icon: <Sparkles size={28} /> },
 ];
 
 const LOADING_FACTS = [
@@ -79,10 +81,26 @@ const STAGE_TIMINGS = [6000, 18000, 40000];
 // ── Component ───────────────────────────────────────────────────────────────
 
 export function FindYourMatch() {
+  const { user } = useAuth();
   const [step, setStep] = useState(0);
-  const [profile, setProfile] = useState<StudentProfile>(emptyProfile);
+  const [profile, setProfile] = useState<StudentProfile>(() => ({
+    gpa: user?.gpa ?? null,
+    sat: user?.sat ?? null,
+    major: user?.intended_major ?? null,
+    location: user?.preferred_state ?? null,
+    extracurriculars: user?.extracurriculars ?? null,
+    in_state_preference: false,
+    free_text: null,
+  }));
   const [prefs, setPrefs] = useState<Preferences>(initialPrefs);
-  const [schoolSize, setSchoolSize] = useState<string | null>(null);
+  const [schoolSize, setSchoolSize] = useState<string | null>(() => {
+    if (!user?.school_size) return null;
+    const sizes = user.school_size.split(", ");
+    if (sizes.includes("Small")) return "Small (<5k)";
+    if (sizes.includes("Medium")) return "Medium (5k–15k)";
+    if (sizes.includes("Large")) return "Large (15k+)";
+    return null;
+  });
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [freeText, setFreeText] = useState("");
   const [suggested, setSuggested] = useState(false);
@@ -361,7 +379,7 @@ export function FindYourMatch() {
 
       {suggested && (
         <div className="wiz-suggest">
-          <span className="wiz-suggest-icon">✨</span>
+          <span className="wiz-suggest-icon"><WandSparkles size={18} /></span>
           <span className="wiz-suggest-text">
             <strong>Auto-tuned!</strong> Sliders were adjusted based on your profile.
             Feel free to fine-tune them.
@@ -424,7 +442,7 @@ export function FindYourMatch() {
           onClick={handleMatch}
           disabled={loading}
         >
-          {loading ? "Finding matches…" : "Find My Matches ✨"}
+          {loading ? "Finding matches…" : <><Sparkles size={16} style={{ marginRight: 6, verticalAlign: -2 }} />Find My Matches</>}
         </button>
       </div>
     </div>
@@ -499,7 +517,7 @@ export function FindYourMatch() {
 
       {usedFallback && (
         <div className="wiz-fallback-banner">
-          <span className="wiz-fallback-icon">⚡</span>
+          <span className="wiz-fallback-icon"><Zap size={18} /></span>
           Showing cosine-similarity matches — AI explanations will return once the LLM is available.
         </div>
       )}
@@ -555,7 +573,7 @@ export function FindYourMatch() {
                           step > i ? " done" : step === i ? " active" : " upcoming"
                         }`}
                       >
-                        {step > i ? "✓" : i + 1}
+                        {step > i ? <Check size={14} /> : i + 1}
                       </div>
                     </React.Fragment>
                   ))}

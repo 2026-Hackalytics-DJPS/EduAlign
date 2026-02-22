@@ -17,6 +17,7 @@ export interface User {
   school_size?: string | null;
   budget_range?: string | null;
   campus_vibe?: string | null;
+  sports?: string | null;
   extracurriculars?: string | null;
 }
 

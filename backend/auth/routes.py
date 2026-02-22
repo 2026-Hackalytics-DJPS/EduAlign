@@ -229,6 +229,7 @@ def me(user: User = Depends(get_current_user)):
 
 class ProfileUpdateRequest(BaseModel):
     gpa: float | None = None
+    sat: int | None = None
     intended_major: str | None = None
     preferred_state: str | None = None
     school_size: str | None = None

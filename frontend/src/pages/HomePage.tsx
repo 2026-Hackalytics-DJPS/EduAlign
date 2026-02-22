@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { getHomeData, getRecentReviews } from "../api";
 import type { HomeData, ReviewRow } from "../api";
+import {
+  Crosshair, Wallet, GitCompareArrows, Star,
+  GraduationCap, ClipboardList, CheckCircle2, Circle,
+} from "lucide-react";
 import "./HomePage.css";
 
 const ACTION_LABELS: Record<string, string> = {
@@ -42,7 +46,9 @@ function fmtDate(iso: string | null): string {
 function Stars({ rating }: { rating: number }) {
   return (
     <span className="home-review-stars">
-      {"★".repeat(rating)}{"☆".repeat(5 - rating)}
+      {[1, 2, 3, 4, 5].map((n) => (
+        <Star key={n} size={14} fill={n <= rating ? "currentColor" : "none"} style={{ color: n <= rating ? "#f59e0b" : "#dde2dd" }} />
+      ))}
     </span>
   );
 }
@@ -134,7 +140,11 @@ export function HomePage() {
                     onClick={() => !done && navigate(p.link)}
                     style={!done ? { cursor: "pointer" } : undefined}
                   >
-                    {done ? "✓" : "○"} {p.label}
+                    {done
+                      ? <CheckCircle2 size={14} style={{ color: "#6aab7a", verticalAlign: -2, marginRight: 4 }} />
+                      : <Circle size={14} style={{ color: "#9ca3af", verticalAlign: -2, marginRight: 4 }} />
+                    }
+                    {p.label}
                   </span>
                 );
               })}
@@ -145,19 +155,19 @@ export function HomePage() {
         {/* ── Quick Actions ───────────────────────────────────── */}
         <div className="home-actions">
           <div className="home-action" onClick={() => navigate("/match")}>
-            <span className="home-action-icon">🎯</span>
+            <span className="home-action-icon"><Crosshair size={22} /></span>
             <span className="home-action-label">Find Your Match</span>
           </div>
           <div className="home-action" onClick={() => navigate("/financial")}>
-            <span className="home-action-icon">💰</span>
+            <span className="home-action-icon"><Wallet size={22} /></span>
             <span className="home-action-label">Financial Planner</span>
           </div>
           <div className="home-action" onClick={() => navigate("/compare")}>
-            <span className="home-action-icon">⚖️</span>
+            <span className="home-action-icon"><GitCompareArrows size={22} /></span>
             <span className="home-action-label">Compare Colleges</span>
           </div>
           <div className="home-action" onClick={() => navigate("/reviews")}>
-            <span className="home-action-icon">⭐</span>
+            <span className="home-action-icon"><Star size={22} /></span>
             <span className="home-action-label">Browse Reviews</span>
           </div>
         </div>
@@ -169,7 +179,7 @@ export function HomePage() {
             <div className="home-card-title">My Shortlist</div>
             {shortlist.length === 0 ? (
               <div className="home-empty">
-                <div className="home-empty-icon">🎓</div>
+                <div className="home-empty-icon"><GraduationCap size={28} /></div>
                 Heart colleges from your match results to start building your shortlist.
               </div>
             ) : (
@@ -211,7 +221,7 @@ export function HomePage() {
             <div className="home-card-title">Recent Activity</div>
             {activity.length === 0 ? (
               <div className="home-empty">
-                <div className="home-empty-icon">📋</div>
+                <div className="home-empty-icon"><ClipboardList size={28} /></div>
                 Your activity will show up here as you explore.
               </div>
             ) : (
@@ -223,7 +233,7 @@ export function HomePage() {
                 } else if (a.action_type === "financial_plan" && meta.college_name) {
                   detail = ` — ${meta.college_name}`;
                 } else if (a.action_type === "write_review") {
-                  detail = ` (${meta.overall_rating}★)`;
+                  detail = ` (${meta.overall_rating}/5)`;
                 }
                 return (
                   <div key={a.id} className="home-activity-item">
@@ -255,7 +265,7 @@ export function HomePage() {
           </div>
           {reviews.length === 0 ? (
             <div className="home-empty">
-              <div className="home-empty-icon">⭐</div>
+              <div className="home-empty-icon"><Star size={28} /></div>
               No reviews yet. Be the first to share your college experience!
             </div>
           ) : (

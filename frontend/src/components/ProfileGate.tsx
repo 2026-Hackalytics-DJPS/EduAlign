@@ -6,7 +6,7 @@ export function ProfileGate({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
 
   if (user && !user.profile_complete) {
-    return <Navigate to="/profile" replace />;
+    return <Navigate to="/setup" replace />;
   }
 
   return <>{children}</>;

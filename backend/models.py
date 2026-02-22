@@ -22,6 +22,7 @@ class User(Base):
 
     # Profile fields (filled on first login)
     gpa = Column(Float, nullable=True)
+    sat = Column(Integer, nullable=True)
     intended_major = Column(String(128), nullable=True)
     preferred_state = Column(String(64), nullable=True)
     school_size = Column(String(32), nullable=True)
@@ -47,6 +48,7 @@ class User(Base):
             "is_admin": bool(self.is_admin),
             "profile_complete": bool(self.profile_complete),
             "gpa": self.gpa,
+            "sat": self.sat,
             "intended_major": self.intended_major,
             "preferred_state": self.preferred_state,
             "school_size": self.school_size,

@@ -7,6 +7,10 @@ import {
 } from "../api";
 import type { CollegeDetail } from "../types";
 import { EXPERIENCE_DIMS, DIMENSION_LABELS } from "../constants";
+import {
+  Star, ThumbsUp, HelpCircle, ThumbsDown,
+  ArrowLeft, ArrowRight, Send, CheckCircle2,
+} from "lucide-react";
 import "./CollegeReviewPage.css";
 
 const STEPS = ["Rating & Info", "Dimensions & Tags", "Your Experience"];
@@ -103,7 +107,7 @@ export function WriteReview() {
         <div className="wr-inner">
           <div className="wr-card">
             <div className="wr-success">
-              ✓ Review submitted! Redirecting…
+              <CheckCircle2 size={20} /> Review submitted! Redirecting...
             </div>
           </div>
         </div>
@@ -118,9 +122,10 @@ export function WriteReview() {
           <div className="wr-title">Review {collegeName}</div>
           <div className="wr-subtitle">Share your experience to help future students.</div>
 
+          {/* Progress bar */}
           <div className="wr-progress">
             {STEPS.map((_, i) => (
-              <span key={i} className={`wr-progress-dot${i <= step ? " wr-progress-dot--active" : ""}`} />
+              <div key={i} className={`wr-progress-step${i <= step ? " wr-progress-step--active" : ""}`} />
             ))}
           </div>
 
@@ -141,7 +146,7 @@ export function WriteReview() {
                       className={`wr-star${n <= overall ? " wr-star--active" : ""}`}
                       onClick={() => setOverall(n)}
                     >
-                      ★
+                      <Star size={28} fill={n <= overall ? "currentColor" : "none"} />
                     </button>
                   ))}
                 </div>
@@ -150,7 +155,7 @@ export function WriteReview() {
               <div className="wr-field">
                 <label>Attendance Status *</label>
                 <select value={attendance} onChange={(e) => setAttendance(e.target.value)}>
-                  <option value="">Select…</option>
+                  <option value="">Select...</option>
                   <option value="current">Current Student</option>
                   <option value="alumni">Alumni</option>
                   <option value="transfer">Transfer Student</option>
@@ -160,7 +165,7 @@ export function WriteReview() {
               <div className="wr-field">
                 <label>Year</label>
                 <select value={year} onChange={(e) => setYear(e.target.value)}>
-                  <option value="">Select…</option>
+                  <option value="">Select...</option>
                   <option value="Freshman">Freshman</option>
                   <option value="Sophomore">Sophomore</option>
                   <option value="Junior">Junior</option>
@@ -183,16 +188,27 @@ export function WriteReview() {
               <div className="wr-field">
                 <label>Would you recommend this college? *</label>
                 <div className="wr-recommend-row">
-                  {(["yes", "maybe", "no"] as const).map((v) => (
-                    <button
-                      key={v}
-                      type="button"
-                      className={`wr-recommend-btn${wouldRecommend === v ? " wr-recommend-btn--selected" : ""}`}
-                      onClick={() => setWouldRecommend(v)}
-                    >
-                      {v === "yes" ? "👍 Yes" : v === "maybe" ? "🤷 Maybe" : "👎 No"}
-                    </button>
-                  ))}
+                  <button
+                    type="button"
+                    className={`wr-recommend-btn${wouldRecommend === "yes" ? " wr-recommend-btn--selected" : ""}`}
+                    onClick={() => setWouldRecommend("yes")}
+                  >
+                    <ThumbsUp size={16} /> Yes
+                  </button>
+                  <button
+                    type="button"
+                    className={`wr-recommend-btn${wouldRecommend === "maybe" ? " wr-recommend-btn--selected" : ""}`}
+                    onClick={() => setWouldRecommend("maybe")}
+                  >
+                    <HelpCircle size={16} /> Maybe
+                  </button>
+                  <button
+                    type="button"
+                    className={`wr-recommend-btn${wouldRecommend === "no" ? " wr-recommend-btn--selected" : ""}`}
+                    onClick={() => setWouldRecommend("no")}
+                  >
+                    <ThumbsDown size={16} /> No
+                  </button>
                 </div>
               </div>
             </>
@@ -283,7 +299,7 @@ export function WriteReview() {
           <div className="wr-nav">
             {step > 0 ? (
               <button type="button" className="wr-btn wr-btn--secondary" onClick={() => { setError(""); setStep(step - 1); }}>
-                Back
+                <ArrowLeft size={16} /> Back
               </button>
             ) : (
               <button type="button" className="wr-btn wr-btn--secondary" onClick={() => navigate(`/reviews/${unitid}`)}>
@@ -292,7 +308,7 @@ export function WriteReview() {
             )}
             {step < STEPS.length - 1 ? (
               <button type="button" className="wr-btn wr-btn--primary" onClick={handleNext}>
-                Next
+                Next <ArrowRight size={16} />
               </button>
             ) : (
               <button
@@ -301,7 +317,7 @@ export function WriteReview() {
                 onClick={handleSubmit}
                 disabled={submitting}
               >
-                {submitting ? "Submitting…" : "Submit Review"}
+                {submitting ? "Submitting..." : <><Send size={15} /> Submit Review</>}
               </button>
             )}
           </div>

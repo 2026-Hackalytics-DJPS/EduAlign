@@ -1,45 +1,45 @@
-# # Raw data files (too large for git)
-# data/raw/*.csv
-# data/raw/*.zip
+# Raw data files (too large for git)
+data/raw/*.csv
+data/raw/*.zip
 
-# # Keep directory structure
-# !data/raw/.gitkeep
-# !data/cleaned/.gitkeep
+# Keep directory structure
+!data/raw/.gitkeep
+!data/cleaned/.gitkeep
 
-# # Python
-# __pycache__/
-# *.py[cod]
-# *.egg-info/
-# dist/
-# build/
-# *.egg
-# .eggs/
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
 
-# # Virtual environments
-# venv/
-# env/
-# .venv/
+# Virtual environments
+venv/
+env/
+.venv/
 
-# # IDE
-# .vscode/
-# .idea/
-# *.swp
-# *.swo
-# *~
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# # OS
-# .DS_Store
-# Thumbs.db
+# OS
+.DS_Store
+Thumbs.db
 
-# # Jupyter
-# .ipynb_checkpoints/
+# Jupyter
+.ipynb_checkpoints/
 
-# # Environment variables
+# Environment variables
 .env
 
-# # Local SQLite DB (auth users)
-# *.db
-# edualign.db
+# Local SQLite DB (auth users)
+*.db
+edualign.db
 
 # Frontend
 frontend/node_modules/

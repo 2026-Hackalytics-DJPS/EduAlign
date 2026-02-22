@@ -47,6 +47,7 @@ def run_migrations():
     alter_statements = [
         "ALTER TABLE users ADD COLUMN is_admin BOOLEAN NOT NULL DEFAULT 0",
         "ALTER TABLE users ADD COLUMN gpa REAL",
+        "ALTER TABLE users ADD COLUMN sat INTEGER",
         "ALTER TABLE users ADD COLUMN intended_major VARCHAR(128)",
         "ALTER TABLE users ADD COLUMN preferred_state VARCHAR(64)",
         "ALTER TABLE users ADD COLUMN school_size VARCHAR(32)",

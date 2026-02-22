@@ -4,6 +4,7 @@ import { EXPERIENCE_DIMS, DIMENSION_LABELS } from "../constants";
 import { SvgRadar } from "./SvgRadar";
 import { saveCollege, getReviewSummary } from "../api";
 import type { MatchItem, Preferences } from "../types";
+import { Heart, Star } from "lucide-react";
 
 interface Props {
   match: MatchItem;
@@ -68,7 +69,10 @@ export function CollegeCard({ match, studentPrefs, rank }: Props) {
                 style={{ fontSize: "0.75rem", color: "#f59e0b", cursor: "pointer", marginTop: "0.1rem" }}
                 onClick={(e) => { e.stopPropagation(); navigate(`/reviews/${match.UNITID}`); }}
               >
-                {"★".repeat(Math.round(avgRating ?? 0))} {avgRating?.toFixed(1)} ({reviewCount} review{reviewCount !== 1 ? "s" : ""})
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <Star key={n} size={11} fill={n <= Math.round(avgRating ?? 0) ? "currentColor" : "none"} style={{ verticalAlign: -1 }} />
+                ))}
+                {" "}{avgRating?.toFixed(1)} ({reviewCount})
               </div>
             )}
           </div>
@@ -79,12 +83,12 @@ export function CollegeCard({ match, studentPrefs, rank }: Props) {
               title={saved ? "Saved!" : "Save to My Colleges"}
               style={{
                 background: "none", border: "none", cursor: saved ? "default" : "pointer",
-                fontSize: "1.3rem", lineHeight: 1, padding: 0,
-                filter: saved ? "none" : "grayscale(1) opacity(0.5)",
-                transition: "filter 0.2s",
+                lineHeight: 1, padding: 0,
+                color: saved ? "#e74c3c" : "rgba(255,255,255,0.4)",
+                transition: "color 0.2s",
               }}
             >
-              {saved ? "❤️" : "🤍"}
+              <Heart size={20} fill={saved ? "currentColor" : "none"} />
             </button>
             <div className="mc-score">
               <span className="mc-score-num">{scorePct}</span>
