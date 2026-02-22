@@ -6,6 +6,10 @@ Preprocessing pipeline for EduAlign.
 3. Min-max normalizes the 8 experience dimensions.
 4. Merges Scorecard data with normalized alumni profiles.
 5. Saves to data/cleaned/colleges_merged.csv.
+
+Paths use os.path.join so paths work on Windows, macOS, and Linux.
+The app does not require gitignored files: if merged/trimmed data are missing,
+load_merged_data() returns an empty DataFrame so auth and the rest of the app still run.
 """
 
 import os
@@ -13,7 +17,7 @@ import os
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
-# Project root (backend/colleges -> backend -> project root)
+# Project root (backend/colleges -> backend -> project root). os.path.join is cross-OS.
 BASE_DIR = os.path.join(os.path.dirname(__file__), "..", "..")
 RAW_DIR = os.path.join(BASE_DIR, "data", "raw")
 CLEANED_DIR = os.path.join(BASE_DIR, "data", "cleaned")
@@ -86,20 +90,51 @@ def aggregate_alumni():
     return profiles
 
 
+def _empty_colleges_df():
+    """Return an empty DataFrame with the same columns as the merged dataset.
+    Used when no data files exist so the app never depends on gitignored raw/cleaned files.
+    """
+    cols = SCORECARD_COLS + EXPERIENCE_DIMS
+    return pd.DataFrame(columns=cols)
+
+
 def load_merged_data():
-    """Load (or build) the merged Scorecard + alumni profiles dataframe."""
+    """Load (or build) the merged Scorecard + alumni profiles dataframe.
+    If merged or trimmed files exist (e.g. committed in repo), use them.
+    If raw files exist, build merged and save. Otherwise return empty DataFrame so app still runs.
+    """
     if os.path.exists(COLLEGES_MERGED):
         return pd.read_csv(COLLEGES_MERGED)
 
     if not os.path.exists(COLLEGES_TRIMMED):
-        trim_scorecard()
+        if os.path.exists(SCORECARD_RAW):
+            trim_scorecard()
+        else:
+            return _empty_colleges_df()
 
-    colleges = pd.read_csv(COLLEGES_TRIMMED)
-    profiles = aggregate_alumni()
+    try:
+        colleges = pd.read_csv(COLLEGES_TRIMMED)
+    except Exception:
+        return _empty_colleges_df()
+
+    if not os.path.exists(ALUMNI_RAW):
+        for dim in EXPERIENCE_DIMS:
+            if dim not in colleges.columns:
+                colleges[dim] = float("nan")
+        return colleges
+
+    try:
+        profiles = aggregate_alumni()
+    except Exception:
+        for dim in EXPERIENCE_DIMS:
+            if dim not in colleges.columns:
+                colleges[dim] = float("nan")
+        return colleges
 
     merged = colleges.merge(profiles, left_on="UNITID", right_on="college_id", how="left")
     merged.drop(columns=["college_id"], inplace=True)
 
+    os.makedirs(CLEANED_DIR, exist_ok=True)
     merged.to_csv(COLLEGES_MERGED, index=False)
     print(f"  Merged shape: {merged.shape[0]} rows x {merged.shape[1]} columns")
     print(f"  Colleges with alumni data: {merged[EXPERIENCE_DIMS[0]].notna().sum()}")

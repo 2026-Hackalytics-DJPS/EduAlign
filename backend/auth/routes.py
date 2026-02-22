@@ -114,14 +114,9 @@ def signup(req: SignupRequest, db: Session = Depends(get_db)):
         logger.exception("Signup failed: %s", e)
         detail = "Account creation failed. Please try again or contact support."
         err_msg = str(e).strip()
-        if hasattr(e, "__class__") and e.__class__.__name__ in (
-            "OperationalError",
-            "IntegrityError",
-            "ProgrammingError",
-        ):
-            detail += f" ({err_msg})"
-        elif os.getenv("DEBUG") or os.getenv("EDUALIGN_DEBUG"):
-            detail += f" ({type(e).__name__}: {err_msg})"
+        err_name = getattr(e, "__class__", type(e)).__name__
+        # Always include error in response so developers can fix (e.g. DB path, schema)
+        detail += f" ({err_name}: {err_msg})"
         raise HTTPException(status_code=500, detail=detail) from e
 
 

@@ -12,10 +12,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Store DB in project root so it persists and is easy to find
+# Store DB in project root so it persists and is easy to find.
+# Path.as_posix() uses forward slashes in the URL so SQLite works on Windows, macOS, and Linux.
 DB_DIR = Path(__file__).resolve().parent.parent
 DB_PATH = DB_DIR / "edualign.db"
-DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{DB_PATH}")
+DB_DIR.mkdir(parents=True, exist_ok=True)
+_default_url = f"sqlite:///{DB_PATH.as_posix()}"
+DATABASE_URL = os.getenv("DATABASE_URL", _default_url)
 
 engine = create_engine(
     DATABASE_URL,

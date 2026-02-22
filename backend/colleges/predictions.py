@@ -11,7 +11,6 @@ import math
 import os
 import re
 
-import google.generativeai as genai
 import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
@@ -19,9 +18,14 @@ from dotenv import load_dotenv
 from backend.colleges.preprocessing import EXPERIENCE_DIMS, load_merged_data
 
 load_dotenv()
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
-MODEL = genai.GenerativeModel("gemini-2.0-flash-lite")
+try:
+    import google.generativeai as genai
+    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+    MODEL = genai.GenerativeModel("gemini-2.0-flash-lite")
+except Exception:
+    genai = None
+    MODEL = None
 
 # Rough GPA-to-SAT mapping (used when student provides GPA but no SAT)
 _GPA_TO_SAT = [
@@ -306,6 +310,10 @@ def predict_with_narrative(profile: dict, predictions: list[dict]) -> list[dict]
         + "\n\nWrite a narrative for each college."
     )
 
+    if MODEL is None or genai is None:
+        for p in predictions:
+            p["narrative"] = _fallback_narrative(p)
+        return predictions
     try:
         response = MODEL.generate_content(
             _NARRATIVE_PROMPT + "\n\n" + prompt,
