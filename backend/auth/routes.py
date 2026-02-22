@@ -99,7 +99,7 @@ def signup(req: SignupRequest, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(user)
 
-    token = create_access_token(data={"sub": user.id, "username": user.username})
+    token = create_access_token(data={"sub": str(user.id), "username": user.username})
     return TokenResponse(access_token=token, user=user.to_dict())
 
 
@@ -112,7 +112,7 @@ def login(req: LoginRequest, db: Session = Depends(get_db)):
     if not verify_password(req.password, user.password_hash):
         raise HTTPException(status_code=401, detail="Password is incorrect.")
 
-    token = create_access_token(data={"sub": user.id, "username": user.username})
+    token = create_access_token(data={"sub": str(user.id), "username": user.username})
     return TokenResponse(access_token=token, user=user.to_dict())
 
 
@@ -132,7 +132,7 @@ def google_login(req: GoogleLoginRequest, db: Session = Depends(get_db)):
 
     user = get_user_by_google_id(db, google_id)
     if user:
-        token = create_access_token(data={"sub": user.id, "username": user.username})
+        token = create_access_token(data={"sub": str(user.id), "username": user.username})
         return TokenResponse(access_token=token, user=user.to_dict())
 
     base_username = (email.split("@")[0] if email else name).lower()
@@ -153,7 +153,7 @@ def google_login(req: GoogleLoginRequest, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(user)
 
-    token = create_access_token(data={"sub": user.id, "username": user.username})
+    token = create_access_token(data={"sub": str(user.id), "username": user.username})
     return TokenResponse(access_token=token, user=user.to_dict())
 
 
@@ -172,7 +172,7 @@ def apple_login(req: AppleLoginRequest, db: Session = Depends(get_db)):
 
     user = get_user_by_apple_id(db, apple_id)
     if user:
-        token = create_access_token(data={"sub": user.id, "username": user.username})
+        token = create_access_token(data={"sub": str(user.id), "username": user.username})
         return TokenResponse(access_token=token, user=user.to_dict())
 
     # New user: create account. Apple may not send name on subsequent requests.
@@ -194,7 +194,7 @@ def apple_login(req: AppleLoginRequest, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(user)
 
-    token = create_access_token(data={"sub": user.id, "username": user.username})
+    token = create_access_token(data={"sub": str(user.id), "username": user.username})
     return TokenResponse(access_token=token, user=user.to_dict())
 
 

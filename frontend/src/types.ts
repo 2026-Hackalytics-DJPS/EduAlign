@@ -89,3 +89,13 @@ export interface AlternativeRow {
 }
 
 export type Preferences = Record<ExperienceDim, number>;
+
+export interface StudentProfile {
+  gpa?: number | null;
+  sat?: number | null;
+  major?: string | null;
+  location?: string | null;
+  extracurriculars?: string | null;
+  in_state_preference?: boolean;
+  free_text?: string | null;
+}

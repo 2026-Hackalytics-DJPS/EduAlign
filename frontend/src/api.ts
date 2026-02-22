@@ -151,3 +151,22 @@ export async function postCompare(payload: ComparePayload) {
     body: JSON.stringify(payload),
   });
 }
+
+export async function postSuggestSliders(
+  profile: Record<string, unknown>
+) {
+  return fetchApi<{ suggested_sliders: Record<string, number> }>(
+    "/api/suggest-sliders",
+    { method: "POST", body: JSON.stringify({ profile }) }
+  );
+}
+
+export async function postPredict(
+  profile: Record<string, unknown>,
+  unitids: number[]
+) {
+  return fetchApi<Record<string, unknown>>("/api/predict", {
+    method: "POST",
+    body: JSON.stringify({ profile, unitids }),
+  });
+}

@@ -1,13 +1,16 @@
-import { useState, useEffect } from "react";
-import { getColleges, postFinancialPlan, postAlternatives, postBudgetTracker } from "../api";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import { getCollegeDetail, postFinancialPlan, postAlternatives, postBudgetTracker } from "../api";
 import type { CollegeListItem } from "../types";
 import type { FinancialPlan, AlternativeRow, BudgetTrackerResult } from "../types";
 import { BarChart } from "../components/BarChart";
+import { CollegeDropdown } from "../components/CollegeDropdown";
 
 export function FinancialPlanner() {
-  const [colleges, setColleges] = useState<CollegeListItem[]>([]);
-  const [selectedName, setSelectedName] = useState("");
-  const [unitid, setUnitid] = useState<number | null>(null);
+  const [searchParams] = useSearchParams();
+  const initialUnitid = searchParams.get("unitid");
+
+  const [selected, setSelected] = useState<CollegeListItem | null>(null);
   const [inState, setInState] = useState(true);
   const [onCampus, setOnCampus] = useState(true);
   const [degreeYears, setDegreeYears] = useState(4);
@@ -22,20 +25,21 @@ export function FinancialPlanner() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getColleges("", "", 2000).then(setColleges).catch(() => setColleges([]));
-  }, []);
-
-  useEffect(() => {
-    if (!selectedName || colleges.length === 0) {
-      setUnitid(null);
-      return;
+    if (initialUnitid) {
+      getCollegeDetail(Number(initialUnitid))
+        .then((c) =>
+          setSelected({
+            UNITID: c.UNITID,
+            INSTNM: c.INSTNM,
+            CITY: c.CITY as string,
+            STABBR: c.STABBR as string,
+          })
+        )
+        .catch(() => {});
     }
-    const row = colleges.find((c) => c.INSTNM === selectedName);
-    if (row) setUnitid(row.UNITID);
-    else setUnitid(null);
-  }, [selectedName, colleges]);
+  }, [initialUnitid]);
 
-  const collegeNames = [...new Set(colleges.map((c) => c.INSTNM))].sort();
+  const unitid = selected?.UNITID ?? null;
 
   const handleCalculate = async () => {
     if (unitid == null) return;
@@ -110,19 +114,9 @@ export function FinancialPlanner() {
       </p>
 
       <div className="form-row">
-        <label>
+        <label style={{ flex: 1 }}>
           Select a college
-          <select
-            value={selectedName}
-            onChange={(e) => setSelectedName(e.target.value)}
-          >
-            <option value="">— Choose —</option>
-            {collegeNames.map((name) => (
-              <option key={name} value={name}>
-                {name}
-              </option>
-            ))}
-          </select>
+          <CollegeDropdown value={selected} onSelect={setSelected} />
         </label>
       </div>
 

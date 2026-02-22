@@ -1,52 +1,92 @@
-import { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { EXPERIENCE_DIMS, DIMENSION_LABELS } from "../constants";
-import type { Preferences } from "../types";
-import type { MatchItem } from "../types";
-import { postMatch } from "../api";
-import { RadarChart } from "../components/RadarChart";
+import type { Preferences, MatchItem, StudentProfile } from "../types";
+import { postMatch, postSuggestSliders } from "../api";
+import { ProfileForm } from "../components/ProfileForm";
+import { CollegeCard } from "../components/CollegeCard";
 
-const initialPrefs: Preferences = {
-  academic_intensity: 5,
-  social_life: 5,
-  inclusivity: 5,
-  career_support: 5,
-  collaboration_vs_competition: 5,
-  mental_health_culture: 5,
-  campus_safety: 5,
-  overall_satisfaction: 5,
+const initialPrefs: Preferences = Object.fromEntries(
+  EXPERIENCE_DIMS.map((d) => [d, 5])
+) as Preferences;
+
+const emptyProfile: StudentProfile = {
+  gpa: null,
+  sat: null,
+  major: null,
+  location: null,
+  extracurriculars: null,
+  in_state_preference: false,
+  free_text: null,
 };
 
 export function FindYourMatch() {
+  const [profile, setProfile] = useState<StudentProfile>(emptyProfile);
   const [prefs, setPrefs] = useState<Preferences>(initialPrefs);
   const [matches, setMatches] = useState<MatchItem[]>([]);
+  const [usedFallback, setUsedFallback] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const handleProfileChange = useCallback(async (next: StudentProfile) => {
+    setProfile(next);
+    const hasData = next.gpa || next.major || next.extracurriculars || next.free_text;
+    if (hasData) {
+      try {
+        const res = await postSuggestSliders(
+          Object.fromEntries(
+            Object.entries(next).filter(([, v]) => v != null && v !== "" && v !== false)
+          )
+        );
+        if (res.suggested_sliders) {
+          setPrefs((prev) => ({ ...prev, ...res.suggested_sliders }) as Preferences);
+        }
+      } catch {
+        /* keep current sliders */
+      }
+    }
+  }, []);
 
   const handleMatch = async () => {
     setError(null);
     setLoading(true);
+    setMatches([]);
     try {
+      const profilePayload = Object.fromEntries(
+        Object.entries(profile).filter(([, v]) => v != null && v !== "" && v !== false)
+      );
       const res = await postMatch({
         preferences: { ...prefs },
         top_n: 4,
+        profile: Object.keys(profilePayload).length > 0 ? profilePayload : undefined,
       });
       setMatches(res.matches ?? []);
+      setUsedFallback(res.used_fallback ?? false);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Matching failed");
-      setMatches([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const studentNormalized = EXPERIENCE_DIMS.map((d) => (prefs[d] - 1) / 9);
-  const labels = EXPERIENCE_DIMS.map((d) => DIMENSION_LABELS[d]);
-
   return (
     <div className="page find-your-match">
       <h1>Find Your Match</h1>
       <p className="subtitle">
-        Rate how important each experience dimension is to you (1 = not important, 10 = essential).
+        Tell us about yourself and rate what matters most — we'll find colleges
+        that align with your experience, not just your stats.
+      </p>
+
+      <h2 style={{ fontSize: "1.1rem", margin: "1.5rem 0 0.75rem" }}>
+        Your Profile
+      </h2>
+      <ProfileForm profile={profile} onChange={handleProfileChange} />
+
+      <h2 style={{ fontSize: "1.1rem", margin: "1.5rem 0 0.75rem" }}>
+        Experience Preferences
+      </h2>
+      <p className="hint">
+        Rate how important each dimension is (1 = not important, 10 = essential).
+        Filling out your profile above will auto-suggest values.
       </p>
 
       <div className="sliders-grid">
@@ -79,61 +119,23 @@ export function FindYourMatch() {
 
       {error && <div className="error-banner">{error}</div>}
 
+      {usedFallback && matches.length > 0 && (
+        <p className="warning-msg" style={{ marginTop: "1rem" }}>
+          Showing similarity-based matches (AI explanations temporarily unavailable).
+        </p>
+      )}
+
       {matches.length > 0 && (
         <div className="matches-section">
           <p className="success-msg">Found your top {matches.length} matches!</p>
-          {matches.map((match, i) => {
-            const collegeVals = EXPERIENCE_DIMS.map(
-              (d) => Number((match as Record<string, unknown>)[d]) ?? 0
-            );
-            const hasProfile = collegeVals.some((v) => v > 0 || v < 0);
-            return (
-              <div key={`${match.INSTNM}-${i}`} className="match-card">
-                <h3>#{i + 1} — {match.INSTNM}</h3>
-                <div className="match-content">
-                  <div className="match-meta">
-                    <div className="metric">
-                      Alignment Score{" "}
-                      {(match.similarity_score * 100).toFixed(0)}%
-                    </div>
-                    {match.strengths && match.strengths.length > 0 && (
-                      <p>
-                        <strong>Strengths:</strong>{" "}
-                        {match.strengths
-                          .map((s) => DIMENSION_LABELS[s as keyof typeof DIMENSION_LABELS] ?? s)
-                          .join(", ")}
-                      </p>
-                    )}
-                    {match.tradeoffs && match.tradeoffs.length > 0 && (
-                      <p>
-                        <strong>Watch out:</strong>{" "}
-                        {match.tradeoffs
-                          .map((t) => DIMENSION_LABELS[t as keyof typeof DIMENSION_LABELS] ?? t)
-                          .join(", ")}
-                      </p>
-                    )}
-                  </div>
-                  <div className="match-detail">
-                    <p className="explanation">{match.explanation}</p>
-                    {hasProfile && (
-                      <RadarChart
-                        series={[
-                          { name: "Your Preferences", values: studentNormalized },
-                          {
-                            name: match.INSTNM,
-                            values: collegeVals,
-                            opacity: 0.6,
-                          },
-                        ]}
-                        labels={labels}
-                        height={400}
-                      />
-                    )}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {matches.map((match, i) => (
+            <CollegeCard
+              key={match.UNITID ?? i}
+              match={match}
+              studentPrefs={prefs}
+              rank={i + 1}
+            />
+          ))}
         </div>
       )}
     </div>

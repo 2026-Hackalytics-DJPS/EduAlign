@@ -1,56 +1,35 @@
-import { useState, useEffect, useMemo } from "react";
-import { getColleges, getCollegeDetail, postCompare } from "../api";
-import type { CollegeDetail, CostResult } from "../types";
+import React, { useState, useEffect, useMemo } from "react";
+import { getCollegeDetail, postCompare } from "../api";
+import type { CollegeListItem, CollegeDetail, CostResult } from "../types";
 import { EXPERIENCE_DIMS, DIMENSION_LABELS } from "../constants";
 import { RadarChart } from "../components/RadarChart";
 import { GroupedBarChart } from "../components/GroupedBarChart";
-
-interface CollegeOption {
-  displayName: string;
-  unitid: number;
-}
+import { CollegeDropdown } from "../components/CollegeDropdown";
 
 export function CompareColleges() {
-  const [options, setOptions] = useState<CollegeOption[]>([]);
-  const [displayToUnitid, setDisplayToUnitid] = useState<Record<string, number>>({});
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selectedColleges, setSelectedColleges] = useState<CollegeListItem[]>(
+    []
+  );
   const [details, setDetails] = useState<Record<number, CollegeDetail>>({});
   const [costs, setCosts] = useState<CostResult[]>([]);
   const [inState, setInState] = useState(true);
   const [onCampus, setOnCampus] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    getColleges("", "", 3000).then((list) => {
-      const nameCounts: Record<string, number> = {};
-      list.forEach((c) => {
-        nameCounts[c.INSTNM] = (nameCounts[c.INSTNM] ?? 0) + 1;
-      });
-      const opts: CollegeOption[] = [];
-      const toUnitid: Record<string, number> = {};
-      list.forEach((c) => {
-        const displayName =
-          (nameCounts[c.INSTNM] ?? 0) > 1
-            ? `${c.INSTNM} (${c.CITY}, ${c.STABBR})`
-            : c.INSTNM;
-        opts.push({ displayName, unitid: c.UNITID });
-        toUnitid[displayName] = c.UNITID;
-      });
-      const unique = Array.from(
-        new Map(opts.map((o) => [o.displayName, o])).values()
-      ).sort((a, b) => a.displayName.localeCompare(b.displayName));
-      setOptions(unique);
-      setDisplayToUnitid(toUnitid);
-    }).catch(() => {});
-  }, []);
-
   const selectedUnitids = useMemo(
-    (): number[] =>
-      selected
-        .map((d) => displayToUnitid[d])
-        .filter((id): id is number => typeof id === "number"),
-    [selected, displayToUnitid]
+    () => selectedColleges.map((c) => c.UNITID),
+    [selectedColleges]
   );
+
+  const addCollege = (c: CollegeListItem | null) => {
+    if (!c || selectedColleges.length >= 4) return;
+    setSelectedColleges((prev) => [...prev, c]);
+  };
+
+  const removeCollege = (unitid: number) => {
+    setSelectedColleges((prev) => prev.filter((c) => c.UNITID !== unitid));
+    setCosts([]);
+  };
 
   useEffect(() => {
     if (selectedUnitids.length < 2) {
@@ -71,9 +50,9 @@ export function CompareColleges() {
   useEffect(() => {
     selectedUnitids.forEach((uid) => {
       if (details[uid] != null) return;
-      getCollegeDetail(uid).then((d) =>
-        setDetails((prev) => ({ ...prev, [uid]: d }))
-      ).catch(() => {});
+      getCollegeDetail(uid)
+        .then((d) => setDetails((prev) => ({ ...prev, [uid]: d })))
+        .catch(() => {});
     });
   }, [selectedUnitids]);
 
@@ -83,16 +62,13 @@ export function CompareColleges() {
     selectedUnitids.forEach((uid) => {
       const d = details[uid];
       if (!d) return;
-      const vals = EXPERIENCE_DIMS.map(
-        (dim) => (Number(d[dim]) as number) ?? 0
-      );
+      const vals = EXPERIENCE_DIMS.map((dim) => Number(d[dim]) || 0);
       if (vals.every((v) => v === 0)) return;
-      const name =
-        options.find((o) => o.unitid === uid)?.displayName ?? String(uid);
-      series.push({ name, values: vals });
+      const col = selectedColleges.find((c) => c.UNITID === uid);
+      series.push({ name: col?.INSTNM ?? String(uid), values: vals });
     });
     return { series, labels };
-  }, [selectedUnitids, details, options]);
+  }, [selectedUnitids, details, selectedColleges]);
 
   const costCategories = ["Tuition", "Housing", "Books", "Other"];
   const groupedBarSeries =
@@ -108,48 +84,71 @@ export function CompareColleges() {
         }))
       : [];
 
-  const compareRows: CollegeOption[] = selectedUnitids
-    .map((uid) => options.find((o) => o.unitid === uid))
-    .filter((o): o is CollegeOption => o != null);
-  const detailRows: CollegeDetail[] = compareRows
-    .map((r) => details[r.unitid])
-    .filter((d): d is CollegeDetail => d != null);
+  const detailRows = selectedUnitids
+    .map((uid) => details[uid])
+    .filter(Boolean);
 
   return (
     <div className="page compare-colleges">
       <h1>Compare Colleges</h1>
       <p className="subtitle">Select 2–4 colleges to compare side by side.</p>
 
-      <p className="info-msg">{options.length} colleges available for comparison.</p>
+      {selectedColleges.length < 4 && (
+        <div className="form-row">
+          <label style={{ flex: 1 }}>
+            Add a college
+            <CollegeDropdown
+              value={null}
+              onSelect={addCollege}
+              excludeIds={selectedUnitids}
+              placeholder="Search for a college to add…"
+            />
+          </label>
+        </div>
+      )}
 
-      <label>
-        Choose colleges to compare
-        <select
-          multiple
-          value={selected}
-          onChange={(e) => {
-            const next = Array.from(
-              e.target.selectedOptions,
-              (o) => o.value
-            ).slice(0, 4);
-            setSelected(next);
-          }}
-          size={8}
-        >
-          {options.map((o) => (
-            <option key={o.displayName} value={o.displayName}>
-              {o.displayName}
-            </option>
+      {selectedColleges.length > 0 && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", margin: "1rem 0" }}>
+          {selectedColleges.map((c) => (
+            <span
+              key={c.UNITID}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.25rem",
+                background: "#e0e7ff",
+                color: "#1e40af",
+                padding: "0.25rem 0.75rem",
+                borderRadius: 16,
+                fontSize: "0.85rem",
+              }}
+            >
+              {c.INSTNM}
+              <button
+                type="button"
+                onClick={() => removeCollege(c.UNITID)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "#1e40af",
+                  fontWeight: 700,
+                  fontSize: "1rem",
+                  lineHeight: 1,
+                }}
+              >
+                &times;
+              </button>
+            </span>
           ))}
-        </select>
-      </label>
-      <p className="hint">Hold Ctrl/Cmd to select multiple (max 4).</p>
+        </div>
+      )}
 
-      {selected.length === 1 && (
+      {selectedColleges.length === 1 && (
         <p className="info-msg">Select at least 2 colleges to compare.</p>
       )}
 
-      {selected.length >= 2 && (
+      {selectedColleges.length >= 2 && (
         <>
           <section>
             <h2>Experience Profile Comparison</h2>
@@ -240,32 +239,29 @@ export function CompareColleges() {
           <section>
             <h2>Key Metrics</h2>
             <div className="metrics-grid">
-              {detailRows.map((row, i) => {
-                const opt = compareRows[i];
-                return (
-                  <div key={opt?.unitid ?? i} className="metric-card">
-                    <h3>{opt?.displayName ?? "—"}</h3>
-                    <p>
-                      Admission Rate:{" "}
-                      {row.ADM_RATE != null
-                        ? `${(Number(row.ADM_RATE) * 100).toFixed(0)}%`
-                        : "N/A"}
-                    </p>
-                    <p>
-                      Graduation Rate:{" "}
-                      {row.C150_4 != null
-                        ? `${(Number(row.C150_4) * 100).toFixed(0)}%`
-                        : "N/A"}
-                    </p>
-                    <p>
-                      Median Earnings (10yr):{" "}
-                      {row.MD_EARN_WNE_P10 != null
-                        ? `$${Number(row.MD_EARN_WNE_P10).toLocaleString()}`
-                        : "N/A"}
-                    </p>
-                  </div>
-                );
-              })}
+              {detailRows.map((row, i) => (
+                <div key={selectedColleges[i]?.UNITID ?? i} className="metric-card">
+                  <h3>{selectedColleges[i]?.INSTNM ?? "—"}</h3>
+                  <p>
+                    Admission Rate:{" "}
+                    {row.ADM_RATE != null
+                      ? `${(Number(row.ADM_RATE) * 100).toFixed(0)}%`
+                      : "N/A"}
+                  </p>
+                  <p>
+                    Graduation Rate:{" "}
+                    {row.C150_4 != null
+                      ? `${(Number(row.C150_4) * 100).toFixed(0)}%`
+                      : "N/A"}
+                  </p>
+                  <p>
+                    Median Earnings (10yr):{" "}
+                    {row.MD_EARN_WNE_P10 != null
+                      ? `$${Number(row.MD_EARN_WNE_P10).toLocaleString()}`
+                      : "N/A"}
+                  </p>
+                </div>
+              ))}
             </div>
           </section>
         </>

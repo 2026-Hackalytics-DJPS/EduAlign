@@ -2,16 +2,30 @@
 FastAPI backend for EduAlign.
 """
 
+import json
+import math
 from typing import Optional
 
 import pandas as pd
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
+
+
+def _clean(records: list[dict]) -> list[dict]:
+    """Replace NaN/Inf with None so JSON serialization succeeds."""
+    for rec in records:
+        for k, v in rec.items():
+            if isinstance(v, float) and (math.isnan(v) or math.isinf(v)):
+                rec[k] = None
+    return records
 
 from backend.auth import router as auth_router
+from backend.auth.routes import get_current_user
 from backend.colleges import EXPERIENCE_DIMS, get_matches, get_predictions, suggest_sliders, load_merged_data
-from backend.database import init_db
+from backend.database import get_db, init_db
+from backend.models import User, UserProfile
 from backend.financials import (
     budget_tracker,
     estimate_semester_cost,
@@ -21,11 +35,9 @@ from backend.financials import (
 
 app = FastAPI(title="EduAlign API", version="0.1.0")
 
-# CORS so the React frontend can call the API (dev on :5173 or production)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
-    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -105,6 +117,17 @@ class SuggestSlidersRequest(BaseModel):
     profile: StudentProfile
 
 
+class SaveProfileRequest(BaseModel):
+    gpa: Optional[float] = None
+    sat: Optional[int] = None
+    major: Optional[str] = None
+    location: Optional[str] = None
+    extracurriculars: Optional[str] = None
+    in_state_preference: Optional[bool] = False
+    free_text: Optional[str] = None
+    sliders: Optional[dict] = None
+
+
 # ── Endpoints ────────────────────────────────────────────────────────────────
 
 
@@ -118,6 +141,9 @@ def api_match(req: MatchRequest):
     matches = []
     for m in result["matches"]:
         m["INSTNM"] = m.pop("college_name", m.get("INSTNM", "Unknown"))
+        for k, v in m.items():
+            if isinstance(v, float) and (math.isnan(v) or math.isinf(v)):
+                m[k] = None
         matches.append(m)
     return {"matches": matches, "used_fallback": result.get("used_fallback", False)}
 
@@ -129,10 +155,10 @@ def api_colleges(search: str = "", state: str = "", limit: int = 50):
         df = df[df["INSTNM"].str.contains(search, case=False, na=False)]
     if state:
         df = df[df["STABBR"] == state.upper()]
-    subset = df.head(limit)
-    return subset[
+    subset = df.head(limit)[
         ["UNITID", "INSTNM", "CITY", "STABBR", "CONTROL", "UGDS", "TUITIONFEE_IN", "TUITIONFEE_OUT"]
-    ].to_dict(orient="records")
+    ]
+    return _clean(subset.to_dict(orient="records"))
 
 
 @app.get("/api/colleges/{unitid}")
@@ -141,7 +167,11 @@ def api_college_detail(unitid: int):
     row = df[df["UNITID"] == unitid]
     if row.empty:
         raise HTTPException(404, "College not found")
-    return row.iloc[0].to_dict()
+    record = row.iloc[0].to_dict()
+    for k, v in record.items():
+        if isinstance(v, float) and (math.isnan(v) or math.isinf(v)):
+            record[k] = None
+    return record
 
 
 @app.post("/api/financial-plan")
@@ -167,7 +197,7 @@ def api_alternatives(req: AlternativesRequest):
         in_state=req.in_state,
         limit=req.limit,
     )
-    return df.to_dict(orient="records")
+    return _clean(df.to_dict(orient="records"))
 
 
 @app.post("/api/budget-tracker")
@@ -203,3 +233,36 @@ def api_predict(req: PredictRequest):
 def api_suggest_sliders(req: SuggestSlidersRequest):
     profile_dict = req.profile.model_dump(exclude_none=True)
     return {"suggested_sliders": suggest_sliders(profile_dict)}
+
+
+@app.get("/api/profile")
+def api_get_profile(user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    row = db.query(UserProfile).filter(UserProfile.user_id == user.id).first()
+    if not row:
+        return {"saved": False}
+    return {"saved": True, **row.to_dict()}
+
+
+@app.put("/api/profile")
+def api_save_profile(req: SaveProfileRequest, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    row = db.query(UserProfile).filter(UserProfile.user_id == user.id).first()
+    if not row:
+        row = UserProfile(user_id=user.id)
+        db.add(row)
+
+    row.gpa = req.gpa
+    row.sat = req.sat
+    row.major = req.major
+    row.location = req.location
+    row.extracurriculars = req.extracurriculars
+    row.in_state_preference = req.in_state_preference or False
+    row.free_text = req.free_text
+
+    if req.sliders:
+        for key in UserProfile.SLIDER_KEYS:
+            if key in req.sliders:
+                setattr(row, key, req.sliders[key])
+
+    db.commit()
+    db.refresh(row)
+    return {"saved": True, **row.to_dict()}

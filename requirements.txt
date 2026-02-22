@@ -3,11 +3,14 @@ numpy
 scikit-learn
 fastapi
 uvicorn
+streamlit
+plotly
 requests
 python-dotenv
 google-generativeai
 google-auth
 nltk
 passlib[bcrypt]
+bcrypt==4.0.1
 python-jose[cryptography]
 sqlalchemy

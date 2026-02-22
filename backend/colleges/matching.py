@@ -95,6 +95,9 @@ def _build_prompt(student_vector: dict, candidates: pd.DataFrame, profile: dict 
 
 def _cosine_fallback(student_vector: dict, candidates: pd.DataFrame, top_n: int = 4) -> list[dict]:
     """Pure math fallback when Gemini is unavailable."""
+    candidates = candidates.dropna(subset=EXPERIENCE_DIMS)
+    if candidates.empty:
+        return []
     student_arr = np.array([student_vector[d] / 10.0 for d in EXPERIENCE_DIMS]).reshape(1, -1)
     college_arr = candidates[EXPERIENCE_DIMS].values
     scores = cosine_similarity(student_arr, college_arr).flatten()
