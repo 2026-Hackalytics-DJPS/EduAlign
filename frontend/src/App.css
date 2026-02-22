@@ -1,12 +1,15 @@
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+
 .app-layout {
   display: flex;
   min-height: 100vh;
+  background: #e8f0e8;
 }
 
 .sidebar {
   width: 260px;
   flex-shrink: 0;
-  background: #1a1a2e;
+  background: #4a5080;
   color: #e8e8f0;
   padding: 1.5rem 1rem;
   display: flex;
@@ -34,38 +37,61 @@
 }
 
 .nav-link {
-  color: #b0b0c0;
+  color: rgba(255, 255, 255, 0.7);
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
   text-decoration: none;
   transition: background 0.15s, color 0.15s;
+  font-size: 0.95rem;
 }
 
 .nav-link:hover {
   color: #fff;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .nav-link.active {
   color: #fff;
-  background: #2563eb;
+  background: rgba(255, 255, 255, 0.2);
+  font-weight: 600;
 }
 
 .main {
   flex: 1;
   padding: 2rem 2.5rem;
   overflow-x: hidden;
+  background: #e8f0e8;
 }
+
+/* ── Page Card ──────────────────────────────────────────────────────────── */
+
+.page-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Typography ─────────────────────────────────────────────────────────── */
 
 .page h1 {
   margin: 0 0 0.5rem 0;
   font-size: 1.75rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  color: #4a5080;
+}
+
+.page h2 {
+  color: #4a5080;
+  font-family: 'Playfair Display', Georgia, serif;
 }
 
 .page .subtitle {
   color: #555;
   margin: 0 0 1.5rem 0;
 }
+
+/* ── Sliders ────────────────────────────────────────────────────────────── */
 
 .sliders-grid {
   display: grid;
@@ -86,28 +112,71 @@
   font-size: 0.9rem;
 }
 
-.slider-row input[type="range"] {
+.slider-row input[type="range"],
+.profile-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: #d1d5db;
+  outline: none;
   flex: 1;
   min-width: 100px;
+}
+
+.slider-row input[type="range"]::-webkit-slider-thumb,
+.profile-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #4a8060;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.slider-row input[type="range"]::-moz-range-thumb,
+.profile-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #4a8060;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.slider-row input[type="range"]::-webkit-slider-runnable-track,
+.profile-slider::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, #a7d5b8, #4a8060);
+  height: 6px;
+  border-radius: 3px;
 }
 
 .slider-value {
   font-weight: 600;
   min-width: 1.5rem;
+  color: #4a5080;
 }
 
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+
 .primary-btn {
-  background: #2563eb;
+  background: #4a5080;
   color: #fff;
   border: none;
-  padding: 0.6rem 1.25rem;
-  border-radius: 8px;
+  padding: 0.6rem 1.5rem;
+  border-radius: 999px;
   font-size: 1rem;
   font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
 }
 
 .primary-btn:hover:not(:disabled) {
-  background: #1d4ed8;
+  background: #3d4370;
 }
 
 .primary-btn:disabled {
@@ -117,16 +186,19 @@
 
 .secondary-btn {
   background: #e5e7eb;
-  color: #1a1a2e;
+  color: #4a5080;
   border: none;
   padding: 0.5rem 1rem;
-  border-radius: 8px;
+  border-radius: 999px;
   font-size: 0.95rem;
+  cursor: pointer;
 }
 
 .secondary-btn:hover {
   background: #d1d5db;
 }
+
+/* ── Alerts ──────────────────────────────────────────────────────────────── */
 
 .error-banner {
   background: #fef2f2;
@@ -158,50 +230,13 @@
   margin: 0 0 1rem 0;
 }
 
+/* ── Match Cards ────────────────────────────────────────────────────────── */
+
 .matches-section {
   margin-top: 2rem;
 }
 
-.match-card {
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 1.25rem;
-  margin-bottom: 1.5rem;
-}
-
-.match-card h3 {
-  margin: 0 0 1rem 0;
-  font-size: 1.15rem;
-}
-
-.match-content {
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 1.5rem;
-}
-
-@media (max-width: 768px) {
-  .match-content {
-    grid-template-columns: 1fr;
-  }
-}
-
-.match-meta .metric {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.match-meta p {
-  margin: 0.25rem 0;
-  font-size: 0.9rem;
-}
-
-.explanation {
-  font-style: italic;
-  color: #4b5563;
-  margin: 0 0 1rem 0;
-}
+/* ── Forms ───────────────────────────────────────────────────────────────── */
 
 .form-row {
   display: flex;
@@ -218,11 +253,24 @@
 }
 
 .form-row input,
-.form-row select {
-  padding: 0.4rem 0.5rem;
+.form-row select,
+.profile-input {
+  padding: 0.5rem 0.75rem;
   border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border-radius: 8px;
   min-width: 140px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.profile-input:focus {
+  outline: none;
+  border-color: #4a5080;
+  box-shadow: 0 0 0 2px rgba(74, 80, 128, 0.15);
 }
 
 .toggles {
@@ -239,6 +287,8 @@
   gap: 0.5rem;
   font-size: 0.9rem;
 }
+
+/* ── Plan Results / Budget ──────────────────────────────────────────────── */
 
 .plan-results,
 .budget-tracker {
@@ -259,6 +309,8 @@
   font-size: 1.05rem;
 }
 
+/* ── Metrics ─────────────────────────────────────────────────────────────── */
+
 .metrics-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -267,7 +319,7 @@
 }
 
 .metric {
-  background: #f8fafc;
+  background: #f0f4f0;
   padding: 0.75rem 1rem;
   border-radius: 8px;
   display: flex;
@@ -283,7 +335,10 @@
 .metric-value {
   font-weight: 600;
   font-size: 1.05rem;
+  color: #4a5080;
 }
+
+/* ── Tables ──────────────────────────────────────────────────────────────── */
 
 .data-table {
   width: 100%;
@@ -300,9 +355,12 @@
 }
 
 .data-table th {
-  background: #f8fafc;
+  background: #f0f4f0;
   font-weight: 600;
+  color: #4a5080;
 }
+
+/* ── Metrics Grid (Compare) ─────────────────────────────────────────────── */
 
 .metrics-grid {
   display: grid;
@@ -312,19 +370,23 @@
 
 .metric-card {
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 1rem;
+  background: #fff;
 }
 
 .metric-card h3 {
   margin: 0 0 0.75rem 0;
   font-size: 1rem;
+  color: #4a5080;
 }
 
 .metric-card p {
   margin: 0.25rem 0;
   font-size: 0.9rem;
 }
+
+/* ── Sections ────────────────────────────────────────────────────────────── */
 
 section {
   margin-bottom: 2rem;
@@ -333,4 +395,14 @@ section {
 section h2 {
   margin: 0 0 1rem 0;
   font-size: 1.2rem;
+}
+
+/* ── Fixed Logo ──────────────────────────────────────────────────────────── */
+
+.fixed-logo-br {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  opacity: 0.5;
+  z-index: 10;
 }

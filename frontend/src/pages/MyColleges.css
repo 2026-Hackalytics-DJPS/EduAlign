@@ -1,0 +1,416 @@
+/* ── My Colleges — Sage / Navy design ───────────────────────────────────── */
+
+.my-scroll {
+  position: relative;
+  min-height: 100vh;
+  padding: 2.5rem 1.5rem 4rem;
+  margin: -2rem -2.5rem;
+  background: #eef2ee;
+}
+
+.my-header {
+  max-width: 1100px;
+  margin: 0 auto 1.5rem;
+}
+
+.my-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.8rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  color: #3d4f7c;
+  font-weight: 600;
+}
+
+.my-subtitle {
+  margin: 0 0 1.5rem;
+  color: #6b7280;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.95rem;
+}
+
+/* ── Tabs ────────────────────────────────────────────────────────────────── */
+
+.my-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #e2e6e2;
+  max-width: 1100px;
+  margin: 0 auto 1.5rem;
+  overflow-x: auto;
+}
+
+.my-tab {
+  padding: 0.65rem 1.25rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #6b7280;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.my-tab:hover {
+  color: #3d4f7c;
+}
+
+.my-tab--active {
+  color: #3d4f7c;
+  border-bottom-color: #3d4f7c;
+}
+
+.my-tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: rgba(61, 79, 124, 0.1);
+  color: #3d4f7c;
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-left: 0.4rem;
+}
+
+/* ── Content area ────────────────────────────────────────────────────────── */
+
+.my-content {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.my-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #9ca3af;
+  font-size: 0.95rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.my-empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+/* ── Kanban board ────────────────────────────────────────────────────────── */
+
+.my-kanban {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.my-kanban-col {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid #e2e6e2;
+  border-radius: 16px;
+  padding: 1rem;
+  min-height: 200px;
+}
+
+.my-kanban-col-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  margin: 0 0 0.75rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.my-kanban-col-title .my-tier-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.my-tier-dream  { background: #818cf8; }
+.my-tier-target { background: #6aab7a; }
+.my-tier-safety { background: #f59e0b; }
+
+/* ── College card (kanban item) ──────────────────────────────────────────── */
+
+.my-college-card {
+  background: #fff;
+  border: 1px solid #e8ede8;
+  border-radius: 14px;
+  padding: 1rem;
+  margin-bottom: 0.65rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.my-college-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 12px rgba(61, 79, 124, 0.1);
+}
+
+.my-college-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #3d4f7c;
+  margin: 0 0 0.2rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.my-college-location {
+  font-size: 0.78rem;
+  color: #6b7280;
+  margin: 0 0 0.5rem;
+}
+
+.my-college-stats {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.my-college-stat {
+  font-size: 0.72rem;
+  color: #555;
+}
+
+.my-college-stat strong {
+  color: #3d4f7c;
+}
+
+.my-college-notes {
+  font-size: 0.8rem;
+  color: #555;
+  font-style: italic;
+  margin: 0.4rem 0;
+  padding: 0.3rem 0.5rem;
+  background: #f8faf8;
+  border-radius: 6px;
+}
+
+.my-college-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.my-college-action {
+  font-size: 0.75rem;
+  color: #3d4f7c;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  background: rgba(61, 79, 124, 0.06);
+  border: none;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.my-college-action:hover {
+  background: rgba(61, 79, 124, 0.14);
+}
+
+.my-college-action--danger {
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.06);
+}
+
+.my-college-action--danger:hover {
+  background: rgba(220, 38, 38, 0.14);
+}
+
+/* ── Tier selector ───────────────────────────────────────────────────────── */
+
+.my-tier-select {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
+  border: 1px solid #dde2dd;
+  font-family: inherit;
+  color: #3d4f7c;
+  background: #f8faf8;
+}
+
+/* ── Notes input ─────────────────────────────────────────────────────────── */
+
+.my-notes-input {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid #dde2dd;
+  border-radius: 8px;
+  width: 100%;
+  font-family: inherit;
+  margin-top: 0.35rem;
+  resize: none;
+}
+
+.my-notes-input:focus {
+  outline: none;
+  border-color: #3d4f7c;
+}
+
+/* ── Saved plans list ────────────────────────────────────────────────────── */
+
+.my-plan-card {
+  background: #fff;
+  border: 1px solid #e8ede8;
+  border-radius: 14px;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  transition: transform 0.15s;
+}
+
+.my-plan-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 12px rgba(61, 79, 124, 0.08);
+}
+
+.my-plan-info {
+  flex: 1;
+}
+
+.my-plan-name {
+  font-weight: 700;
+  color: #3d4f7c;
+  font-size: 0.95rem;
+}
+
+.my-plan-meta {
+  font-size: 0.78rem;
+  color: #6b7280;
+  margin-top: 0.2rem;
+}
+
+.my-plan-cost {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #3d4f7c;
+  text-align: right;
+}
+
+.my-plan-status {
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  display: inline-block;
+  margin-top: 0.2rem;
+}
+
+.my-plan-status--ok   { background: #dcfce7; color: #15803d; }
+.my-plan-status--warn { background: #fef3c7; color: #92400e; }
+
+/* ── Match history ───────────────────────────────────────────────────────── */
+
+.my-match-card {
+  background: #fff;
+  border: 1px solid #e8ede8;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.65rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.my-match-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(61, 79, 124, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3d4f7c;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.my-match-info {
+  flex: 1;
+}
+
+.my-match-college {
+  font-weight: 700;
+  color: #3d4f7c;
+  font-size: 0.92rem;
+}
+
+.my-match-date {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.my-match-score {
+  font-weight: 700;
+  color: #6aab7a;
+  font-size: 0.95rem;
+}
+
+/* ── Saved comparisons ───────────────────────────────────────────────────── */
+
+.my-comp-card {
+  background: #fff;
+  border: 1px solid #e8ede8;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  transition: transform 0.15s;
+  cursor: pointer;
+}
+
+.my-comp-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 12px rgba(61, 79, 124, 0.08);
+}
+
+.my-comp-names {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.my-comp-pill {
+  background: rgba(61, 79, 124, 0.08);
+  color: #3d4f7c;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.my-comp-date {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  white-space: nowrap;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .my-kanban {
+    grid-template-columns: 1fr;
+  }
+  .my-plan-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

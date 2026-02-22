@@ -3,11 +3,21 @@ import React, { createContext, useContext, useState, useCallback, useEffect } fr
 const AUTH_TOKEN_KEY = "edualign_token";
 const AUTH_USER_KEY = "edualign_user";
 
-interface User {
+export interface User {
   id: number;
   username: string;
   email?: string | null;
   created_at?: string | null;
+  is_admin?: boolean;
+  profile_complete?: boolean;
+  gpa?: number | null;
+  sat?: number | null;
+  intended_major?: string | null;
+  preferred_state?: string | null;
+  school_size?: string | null;
+  budget_range?: string | null;
+  campus_vibe?: string | null;
+  extracurriculars?: string | null;
 }
 
 interface AuthState {
@@ -20,6 +30,7 @@ interface AuthContextValue extends AuthState {
   login: (token: string, user: User) => void;
   logout: () => void;
   setAuth: (token: string, user: User) => void;
+  updateUser: (user: User) => void;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -64,11 +75,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setAuth(token, user);
   }, [setAuth]);
 
+  const updateUser = useCallback((user: User) => {
+    localStorage.setItem(AUTH_USER_KEY, JSON.stringify(user));
+    setState((s) => ({ ...s, user }));
+  }, []);
+
   const value: AuthContextValue = {
     ...state,
     login,
     logout,
     setAuth,
+    updateUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

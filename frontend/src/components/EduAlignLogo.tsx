@@ -1,5 +1,5 @@
 /** Dark blue-purple to match brand (#545279) */
-const CAP_COLOR = "#545279";
+const CAP_COLOR = "#4a5080";
 
 interface EduAlignLogoProps {
   /** Approximate height of the text in pixels. */
@@ -16,7 +16,7 @@ export function EduAlignLogo({ height = 48, className = "", dark = false }: EduA
   const fontSize = height * 0.55;
   const capSize = height * 0.5;
   const textColor = dark ? "#e8e8f0" : CAP_COLOR;
-  const alignColor = dark ? "#fff" : "#000";
+  const alignColor = dark ? "#fff" : "#333";
   const strokeColor = dark ? "#e8e8f0" : CAP_COLOR;
 
   return (
@@ -58,7 +58,7 @@ export function EduAlignLogo({ height = 48, className = "", dark = false }: EduA
         className="auth-brand-name"
         style={{
           fontSize,
-          fontFamily: "Georgia, 'Times New Roman', serif",
+          fontFamily: "'Playfair Display', Georgia, serif",
           fontWeight: 700,
           letterSpacing: "-0.02em",
         }}

@@ -1,0 +1,583 @@
+/* ── College Review Page — Sage / Navy design ────────────────────────────── */
+
+.rv-scroll {
+  position: relative;
+  min-height: 100vh;
+  padding: 2rem 1.5rem 4rem;
+  margin: -2rem -2.5rem;
+  background: #eef2ee;
+}
+
+.rv-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.rv-back {
+  font-size: 0.82rem;
+  color: #3d4f7c;
+  cursor: pointer;
+  font-weight: 600;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 1rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+/* ── Header card ─────────────────────────────────────────────────────────── */
+
+.rv-header {
+  background: #fff;
+  border: 1px solid #e2e6e2;
+  border-radius: 18px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.rv-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.rv-college-name {
+  font-size: 1.5rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  color: #3d4f7c;
+  font-weight: 600;
+  margin: 0 0 0.15rem;
+}
+
+.rv-college-meta {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.rv-overall {
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.rv-overall-num {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #3d4f7c;
+  line-height: 1;
+}
+
+.rv-overall-stars {
+  color: #f59e0b;
+  font-size: 1.1rem;
+  margin-top: 0.15rem;
+}
+
+.rv-overall-count {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.1rem;
+}
+
+/* ── Recommend bar ───────────────────────────────────────────────────────── */
+
+.rv-recommend {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f0f3f0;
+}
+
+.rv-recommend-item {
+  font-size: 0.8rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.rv-recommend-item strong {
+  color: #3d4f7c;
+}
+
+/* ── Radar + Tags row ────────────────────────────────────────────────────── */
+
+.rv-insights {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.rv-card {
+  background: #fff;
+  border: 1px solid #e2e6e2;
+  border-radius: 16px;
+  padding: 1.25rem;
+}
+
+.rv-card-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  margin: 0 0 0.75rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.rv-radar-center {
+  display: flex;
+  justify-content: center;
+}
+
+/* ── Tag cloud ───────────────────────────────────────────────────────────── */
+
+.rv-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.rv-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(61, 79, 124, 0.06);
+  color: #3d4f7c;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.rv-tag-count {
+  font-size: 0.68rem;
+  background: rgba(61, 79, 124, 0.12);
+  padding: 0.1rem 0.35rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+/* ── Write review button ─────────────────────────────────────────────────── */
+
+.rv-write-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #3d4f7c;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  transition: background 0.2s;
+  margin-bottom: 1.25rem;
+}
+
+.rv-write-btn:hover {
+  background: #2e3d63;
+}
+
+/* ── Individual review ───────────────────────────────────────────────────── */
+
+.rv-review {
+  background: #fff;
+  border: 1px solid #e2e6e2;
+  border-radius: 14px;
+  padding: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.rv-review-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.rv-review-user {
+  font-weight: 700;
+  color: #3d4f7c;
+  font-size: 0.9rem;
+}
+
+.rv-review-badge {
+  font-size: 0.7rem;
+  background: rgba(61, 79, 124, 0.06);
+  color: #6b7280;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  margin-left: 0.4rem;
+}
+
+.rv-review-stars {
+  color: #f59e0b;
+  font-size: 0.9rem;
+}
+
+.rv-review-section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin: 0.65rem 0 0.2rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.rv-review-text {
+  font-size: 0.88rem;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.rv-review-advice {
+  background: #f0f8f0;
+  border-left: 3px solid #6aab7a;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.85rem;
+  color: #374151;
+  margin-top: 0.5rem;
+  line-height: 1.45;
+}
+
+.rv-review-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.rv-review-tag {
+  font-size: 0.7rem;
+  background: rgba(61, 79, 124, 0.06);
+  color: #3d4f7c;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+}
+
+.rv-review-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.65rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #f0f3f0;
+}
+
+.rv-review-date {
+  font-size: 0.72rem;
+  color: #9ca3af;
+}
+
+.rv-vote-row {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.rv-vote-btn {
+  font-size: 0.78rem;
+  background: #f8faf8;
+  border: 1px solid #e2e6e2;
+  border-radius: 6px;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  color: #6b7280;
+  transition: background 0.15s;
+}
+
+.rv-vote-btn:hover {
+  background: #e8ede8;
+}
+
+/* ── Write Review Wizard ─────────────────────────────────────────────────── */
+
+.wr-scroll {
+  position: relative;
+  min-height: 100vh;
+  padding: 2rem 1.5rem 4rem;
+  margin: -2rem -2.5rem;
+  background: #eef2ee;
+}
+
+.wr-inner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.wr-card {
+  background: #fff;
+  border: 1px solid #e2e6e2;
+  border-radius: 18px;
+  padding: 2rem;
+}
+
+.wr-title {
+  font-size: 1.4rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  color: #3d4f7c;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+}
+
+.wr-subtitle {
+  font-size: 0.88rem;
+  color: #6b7280;
+  margin: 0 0 1.5rem;
+}
+
+.wr-step-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  margin-bottom: 0.4rem;
+}
+
+.wr-field {
+  margin-bottom: 1.1rem;
+}
+
+.wr-field label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3d4f7c;
+  margin-bottom: 0.3rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.wr-field input,
+.wr-field select,
+.wr-field textarea {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #dde2dd;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  background: #f8faf8;
+}
+
+.wr-field textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.wr-field input:focus,
+.wr-field select:focus,
+.wr-field textarea:focus {
+  outline: none;
+  border-color: #3d4f7c;
+}
+
+.wr-stars-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.wr-star {
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #ddd;
+  transition: color 0.15s;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.wr-star--active {
+  color: #f59e0b;
+}
+
+.wr-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+
+.wr-slider-label {
+  width: 130px;
+  font-size: 0.8rem;
+  color: #3d4f7c;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.wr-slider-row input[type="range"] {
+  flex: 1;
+  accent-color: #6aab7a;
+}
+
+.wr-slider-val {
+  width: 24px;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #3d4f7c;
+}
+
+.wr-tags-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.wr-tag-chip {
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  border: 1.5px solid #dde2dd;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #555;
+}
+
+.wr-tag-chip--selected {
+  background: #3d4f7c;
+  color: #fff;
+  border-color: #3d4f7c;
+}
+
+.wr-recommend-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.wr-recommend-btn {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1.5px solid #dde2dd;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 0.88rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+  color: #555;
+}
+
+.wr-recommend-btn--selected {
+  border-color: #3d4f7c;
+  background: rgba(61, 79, 124, 0.06);
+  color: #3d4f7c;
+  font-weight: 600;
+}
+
+.wr-progress {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.wr-progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #dde2dd;
+  transition: background 0.2s;
+}
+
+.wr-progress-dot--active {
+  background: #3d4f7c;
+}
+
+.wr-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.wr-btn {
+  padding: 0.55rem 1.5rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  transition: all 0.15s;
+  border: none;
+}
+
+.wr-btn--primary {
+  background: #3d4f7c;
+  color: #fff;
+}
+
+.wr-btn--primary:hover {
+  background: #2e3d63;
+}
+
+.wr-btn--secondary {
+  background: transparent;
+  color: #3d4f7c;
+  border: 1.5px solid #dde2dd;
+}
+
+.wr-btn--secondary:hover {
+  border-color: #3d4f7c;
+}
+
+.wr-error {
+  background: #fef2f2;
+  color: #991b1b;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  margin-bottom: 1rem;
+}
+
+.wr-success {
+  background: #f0fdf4;
+  color: #15803d;
+  padding: 0.75rem;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* ── Browse Reviews page ─────────────────────────────────────────────────── */
+
+.rv-browse-search {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rv-browse-search input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: 1px solid #dde2dd;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  background: #fff;
+}
+
+.rv-browse-search input:focus {
+  outline: none;
+  border-color: #3d4f7c;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .rv-insights {
+    grid-template-columns: 1fr;
+  }
+  .rv-header-top {
+    flex-direction: column;
+  }
+}

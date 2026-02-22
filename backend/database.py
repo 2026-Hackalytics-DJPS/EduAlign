@@ -38,3 +38,28 @@ def init_db():
     """Create all tables. Call once at startup or when adding new models."""
     from backend import models  # noqa: F401
     Base.metadata.create_all(bind=engine)
+
+
+def run_migrations():
+    """Add columns that may be missing from an older schema (idempotent)."""
+    from sqlalchemy import text
+
+    alter_statements = [
+        "ALTER TABLE users ADD COLUMN is_admin BOOLEAN NOT NULL DEFAULT 0",
+        "ALTER TABLE users ADD COLUMN gpa REAL",
+        "ALTER TABLE users ADD COLUMN intended_major VARCHAR(128)",
+        "ALTER TABLE users ADD COLUMN preferred_state VARCHAR(64)",
+        "ALTER TABLE users ADD COLUMN school_size VARCHAR(32)",
+        "ALTER TABLE users ADD COLUMN budget_range VARCHAR(64)",
+        "ALTER TABLE users ADD COLUMN campus_vibe TEXT",
+        "ALTER TABLE users ADD COLUMN sports VARCHAR(256)",
+        "ALTER TABLE users ADD COLUMN extracurriculars VARCHAR(256)",
+        "ALTER TABLE users ADD COLUMN profile_complete BOOLEAN DEFAULT 0",
+    ]
+    with engine.connect() as conn:
+        for stmt in alter_statements:
+            try:
+                conn.execute(text(stmt))
+                conn.commit()
+            except Exception:
+                conn.rollback()

@@ -1,0 +1,894 @@
+/* ── Find Your Match — Performance-optimized styles ─────────────────────── */
+
+.wiz-scroll {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2.5rem 1.5rem 4rem;
+  margin: -2rem -2.5rem;
+  background: #eef2ee;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wiz-radar-ring,
+  .wiz-radar-icon,
+  .wiz-loading-dots span,
+  .wiz-fact-text { animation: none; }
+  .wiz-radar-ring { opacity: 0.15; transform: none; }
+  .wiz-loading-dots span { opacity: 1; }
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────── */
+
+.wiz-card {
+  width: 100%;
+  max-width: 720px;
+  background: #fff;
+  border: 1px solid #e2e6e2;
+  border-radius: 20px;
+  padding: 2.5rem 2.5rem 2rem;
+  box-shadow: 0 2px 12px rgba(61, 79, 124, 0.07);
+}
+
+/* ── Progress ─────────────────────────────────────────────────────────── */
+
+.wiz-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 2rem;
+}
+.wiz-step-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  transition: all 0.35s ease;
+  flex-shrink: 0;
+  cursor: default;
+}
+.wiz-step-dot.done {
+  background: #3d4f7c;
+  color: #fff;
+}
+.wiz-step-dot.active {
+  background: #3d4f7c;
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(61, 79, 124, 0.2);
+}
+.wiz-step-dot.upcoming {
+  background: rgba(61, 79, 124, 0.12);
+  color: #3d4f7c;
+}
+.wiz-step-line {
+  height: 2px;
+  width: 80px;
+  transition: background 0.35s ease;
+  flex-shrink: 0;
+}
+.wiz-step-line.filled {
+  background: #3d4f7c;
+}
+.wiz-step-line.empty {
+  background: rgba(61, 79, 124, 0.15);
+}
+.wiz-step-labels {
+  display: flex;
+  justify-content: space-between;
+  margin: -1rem 0 1.5rem;
+  padding: 0 0.5rem;
+}
+.wiz-step-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  color: rgba(61, 79, 124, 0.5);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  transition: color 0.3s ease;
+  text-align: center;
+  flex: 1;
+}
+.wiz-step-label.active {
+  color: #3d4f7c;
+  font-weight: 600;
+}
+
+/* ── Typography ───────────────────────────────────────────────────────── */
+
+.wiz-h1 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: #3d4f7c;
+  margin: 0 0 0.35rem;
+  line-height: 1.2;
+}
+.wiz-sub {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0 0 1.75rem;
+  line-height: 1.5;
+}
+.wiz-section-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #3d4f7c;
+  margin: 1.5rem 0 0.75rem;
+}
+.wiz-section-title:first-child {
+  margin-top: 0;
+}
+
+/* ── Form elements ────────────────────────────────────────────────────── */
+
+.wiz-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 600px) {
+  .wiz-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.wiz-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.wiz-field.full {
+  grid-column: 1 / -1;
+}
+.wiz-label {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.wiz-input,
+.wiz-textarea {
+  padding: 0.6rem 0.85rem;
+  border: 1px solid rgba(61, 79, 124, 0.18);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  background: #f8faf8;
+  color: #1f2937;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+.wiz-input:focus,
+.wiz-textarea:focus {
+  outline: none;
+  border-color: #3d4f7c;
+  box-shadow: 0 0 0 3px rgba(61, 79, 124, 0.1);
+  background: #fff;
+}
+.wiz-textarea {
+  resize: none;
+  min-height: 80px;
+}
+
+/* ── Size buttons ─────────────────────────────────────────────────────── */
+
+.wiz-size-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.wiz-size-btn {
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(61, 79, 124, 0.2);
+  background: #f8faf8;
+  color: #3d4f7c;
+  font-size: 0.82rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.wiz-size-btn:hover {
+  border-color: #3d4f7c;
+  background: #eef2ee;
+}
+.wiz-size-btn.selected {
+  background: #3d4f7c;
+  color: #fff;
+  border-color: #3d4f7c;
+}
+
+/* ── Toggle ───────────────────────────────────────────────────────────── */
+
+.wiz-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+.wiz-toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: rgba(61, 79, 124, 0.15);
+  cursor: pointer;
+  transition: background 0.2s ease;
+  border: none;
+  padding: 0;
+  flex-shrink: 0;
+}
+.wiz-toggle.on {
+  background: #6aab7a;
+}
+.wiz-toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+.wiz-toggle.on .wiz-toggle-knob {
+  transform: translateX(20px);
+}
+.wiz-toggle-label {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.88rem;
+  color: #374151;
+}
+
+/* ── Sliders ──────────────────────────────────────────────────────────── */
+
+.wiz-sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.wiz-slider-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.wiz-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.wiz-slider-name {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #374151;
+}
+.wiz-slider-val {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #3d4f7c;
+  min-width: 2.5rem;
+  text-align: right;
+}
+.wiz-slider-track {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(to right, #c8d8c0, #6aab7a);
+  outline: none;
+  cursor: pointer;
+}
+.wiz-slider-track::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2.5px solid #6aab7a;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+.wiz-slider-track::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 10px rgba(106, 171, 122, 0.3);
+}
+.wiz-slider-track::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2.5px solid #6aab7a;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+.wiz-slider-hints {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: #9ca3af;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+/* ── Suggest banner ───────────────────────────────────────────────────── */
+
+.wiz-suggest {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: rgba(106, 171, 122, 0.1);
+  border: 1px solid rgba(106, 171, 122, 0.25);
+  margin-bottom: 1.5rem;
+}
+.wiz-suggest-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+.wiz-suggest-text {
+  font-size: 0.82rem;
+  color: #374151;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  line-height: 1.4;
+}
+.wiz-suggest-text strong {
+  color: #3d4f7c;
+}
+
+/* ── Chip tags ────────────────────────────────────────────────────────── */
+
+.wiz-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+.wiz-chip {
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(61, 79, 124, 0.18);
+  background: #f8faf8;
+  color: #374151;
+  font-size: 0.82rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+  user-select: none;
+}
+.wiz-chip:hover {
+  border-color: #3d4f7c;
+}
+.wiz-chip.selected {
+  background: #3d4f7c;
+  color: #fff;
+  border-color: #3d4f7c;
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────── */
+
+.wiz-btn-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(61, 79, 124, 0.08);
+}
+.wiz-btn {
+  padding: 0.65rem 1.75rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  border: none;
+}
+.wiz-btn-primary {
+  background: #3d4f7c;
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(61, 79, 124, 0.25);
+}
+.wiz-btn-primary:hover:not(:disabled) {
+  background: #334168;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(61, 79, 124, 0.3);
+}
+.wiz-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.wiz-btn-secondary {
+  background: rgba(61, 79, 124, 0.08);
+  color: #3d4f7c;
+}
+.wiz-btn-secondary:hover {
+  background: rgba(61, 79, 124, 0.14);
+}
+.wiz-btn-ghost {
+  background: transparent;
+  color: #6b7280;
+  font-weight: 500;
+}
+.wiz-btn-ghost:hover {
+  color: #3d4f7c;
+}
+
+/* ── Error & loading ──────────────────────────────────────────────────── */
+
+.wiz-error {
+  background: rgba(220, 38, 38, 0.08);
+  color: #dc2626;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  margin-top: 1rem;
+}
+.wiz-fallback-msg {
+  color: #d97706;
+  font-size: 0.88rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  margin: 1rem 0;
+}
+.wiz-success {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #15803d;
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+/* ── Loading screen ──────────────────────────────────────────────────── */
+
+.wiz-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5rem 0 1.5rem;
+  text-align: center;
+  animation: wizFadeIn 0.4s ease forwards;
+}
+
+.wiz-loading-radar {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  margin-bottom: 2rem;
+}
+.wiz-radar-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(61, 79, 124, 0.3);
+  animation: radarPulse 2.8s ease-out infinite;
+}
+.wiz-radar-ring-1 { animation-delay: 0s; }
+.wiz-radar-ring-2 { animation-delay: 0.9s; }
+.wiz-radar-ring-3 { animation-delay: 1.8s; }
+
+.wiz-radar-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3d4f7c, #6b7db3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(61, 79, 124, 0.35);
+}
+.wiz-radar-icon {
+  font-size: 1.8rem;
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes radarPulse {
+  0% {
+    transform: scale(0.35);
+    opacity: 0.7;
+    border-color: rgba(61, 79, 124, 0.5);
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+    border-color: rgba(61, 79, 124, 0);
+  }
+}
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.wiz-loading-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #3d4f7c;
+  margin: 0 0 1.75rem;
+  line-height: 1.3;
+}
+.wiz-loading-dots span {
+  display: inline-block;
+  opacity: 0.3;
+  animation: dotPulse 1.4s ease-in-out infinite;
+}
+.wiz-loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.wiz-loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+.wiz-loading-bar-wrap {
+  width: 100%;
+  max-width: 340px;
+  margin-bottom: 2rem;
+}
+.wiz-loading-bar {
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(61, 79, 124, 0.08);
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+.wiz-loading-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #6aab7a, #3d4f7c);
+  transition: width 3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.wiz-loading-bar-pips {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.15rem;
+}
+.wiz-loading-pip {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(61, 79, 124, 0.12);
+  transition: background 0.5s ease, transform 0.3s ease;
+}
+.wiz-loading-pip.active {
+  background: #3d4f7c;
+  transform: scale(1.25);
+}
+
+.wiz-loading-fact-wrap {
+  margin-bottom: 1.75rem;
+  min-height: 3.5rem;
+}
+.wiz-fact-label {
+  display: block;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #6aab7a;
+  margin-bottom: 0.4rem;
+}
+.wiz-fact-text {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.88rem;
+  color: #6b7280;
+  line-height: 1.5;
+  max-width: 360px;
+  margin: 0 auto;
+  animation: factSlideIn 0.5s ease forwards;
+}
+@keyframes factSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.wiz-loading-elapsed {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.72rem;
+  color: rgba(61, 79, 124, 0.35);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Results ──────────────────────────────────────────────────────────── */
+
+.wiz-results {
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 0;
+}
+.wiz-results-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.wiz-results-eyebrow {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #3d4f7c;
+  background: rgba(61, 79, 124, 0.08);
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  border-radius: 999px;
+  margin-bottom: 0.75rem;
+}
+.wiz-results-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3a5e;
+  margin: 0 0 0.4rem;
+  line-height: 1.2;
+}
+.wiz-results-sub {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.5;
+}
+.wiz-results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+@media (max-width: 860px) {
+  .wiz-results-grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+.wiz-results-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.wiz-start-over {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(61, 79, 124, 0.25);
+  background: #fff;
+  color: #3d4f7c;
+  font-size: 0.88rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.wiz-start-over:hover {
+  background: #3d4f7c;
+  color: #fff;
+  border-color: #3d4f7c;
+}
+.wiz-fallback-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px solid rgba(217, 119, 6, 0.2);
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  margin-bottom: 1.25rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.82rem;
+  color: #92400e;
+}
+.wiz-fallback-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* ── Step transitions ─────────────────────────────────────────────────── */
+
+.wiz-step-enter {
+  animation: wizFadeIn 0.3s ease forwards;
+}
+@keyframes wizFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── College Card (mc-*) ──────────────────────────────────────────────── */
+
+.mc {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: default;
+}
+.mc:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(61, 79, 124, 0.3);
+}
+
+.mc-bg {
+  background: linear-gradient(145deg, #3d4f7c 0%, #2c3a5e 60%, #1e2a48 100%);
+  padding: 1.4rem 1.4rem 1rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.mc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.mc-rank {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.mc-name {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.25;
+  margin-top: 0.15rem;
+}
+
+.mc-score {
+  flex-shrink: 0;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(106, 171, 122, 0.15);
+  border: 2px solid rgba(106, 171, 122, 0.5);
+}
+.mc-score-num {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #8dd9a0;
+  line-height: 1;
+}
+.mc-score-pct {
+  font-size: 0.55rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: "Plus Jakarta Sans", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mc-explanation {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 0.85rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.mc-explanation.expanded {
+  -webkit-line-clamp: unset;
+  overflow: visible;
+}
+.mc-read-more {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #8dd9a0;
+  font-size: 0.75rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 0.85rem;
+}
+
+.mc-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.85rem;
+}
+.mc-pill {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.mc-pill-strength {
+  background: rgba(106, 171, 122, 0.18);
+  color: #8dd9a0;
+  border: 1px solid rgba(106, 171, 122, 0.3);
+}
+.mc-pill-tradeoff {
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+
+.mc-radar-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem -0.5rem 0.25rem;
+}
+
+.mc-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 0.5rem 0;
+}
+
+.mc-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.25rem;
+}
+.mc-explore {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.mc-explore:hover {
+  color: #8dd9a0;
+}
+.mc-explore svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+.mc-explore:hover svg {
+  transform: translateX(2px);
+}

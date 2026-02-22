@@ -18,6 +18,7 @@ from backend.auth.user_queries import (
     get_user_by_username,
 )
 from backend.auth.validation import is_valid_username
+from backend.activity import log_activity
 from backend.database import get_db
 from backend.models import User
 
@@ -99,6 +100,7 @@ def signup(req: SignupRequest, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(user)
 
+    log_activity(db, user.id, "signup")
     token = create_access_token(data={"sub": str(user.id), "username": user.username})
     return TokenResponse(access_token=token, user=user.to_dict())
 
@@ -112,6 +114,7 @@ def login(req: LoginRequest, db: Session = Depends(get_db)):
     if not verify_password(req.password, user.password_hash):
         raise HTTPException(status_code=401, detail="Password is incorrect.")
 
+    log_activity(db, user.id, "login")
     token = create_access_token(data={"sub": str(user.id), "username": user.username})
     return TokenResponse(access_token=token, user=user.to_dict())
 
@@ -201,4 +204,27 @@ def apple_login(req: AppleLoginRequest, db: Session = Depends(get_db)):
 @router.get("/me")
 def me(user: User = Depends(get_current_user)):
     """Return the currently logged-in user (requires Authorization: Bearer <token>)."""
+    return user.to_dict()
+
+
+class ProfileUpdateRequest(BaseModel):
+    gpa: float | None = None
+    intended_major: str | None = None
+    preferred_state: str | None = None
+    school_size: str | None = None
+    budget_range: str | None = None
+    campus_vibe: str | None = None
+    sports: str | None = None
+    extracurriculars: str | None = None
+
+
+@router.patch("/profile")
+def update_profile(req: ProfileUpdateRequest, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Update profile fields on the User and mark profile_complete = True."""
+    for field, value in req.model_dump(exclude_none=True).items():
+        setattr(user, field, value)
+    user.profile_complete = True
+    db.commit()
+    db.refresh(user)
+    log_activity(db, user.id, "profile_update")
     return user.to_dict()

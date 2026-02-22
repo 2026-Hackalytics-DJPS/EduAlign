@@ -1,0 +1,574 @@
+/* ── Financial Planner — Sage / Navy design ─────────────────────────────── */
+
+.fp-scroll {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2.5rem 1.5rem 4rem;
+  margin: -2rem -2.5rem;
+  background: #eef2ee;
+}
+
+.fp-card {
+  width: 100%;
+  max-width: 820px;
+  background: #fff;
+  border: 1px solid #e2e6e2;
+  border-radius: 20px;
+  padding: 2.5rem 2.5rem 2rem;
+  box-shadow: 0 2px 12px rgba(61, 79, 124, 0.07);
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+
+.fp-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.8rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  color: #3d4f7c;
+  font-weight: 600;
+}
+
+.fp-subtitle {
+  margin: 0 0 2rem;
+  color: #6b7280;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.95rem;
+}
+
+/* ── Form ────────────────────────────────────────────────────────────────── */
+
+.fp-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.fp-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1;
+  min-width: 200px;
+}
+
+.fp-field-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3d4f7c;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.fp-field input,
+.fp-field select {
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid #dde2dd;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  background: #f8faf8;
+  color: #333;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.fp-field input:focus,
+.fp-field select:focus {
+  outline: none;
+  border-color: #3d4f7c;
+  box-shadow: 0 0 0 3px rgba(61, 79, 124, 0.12);
+}
+
+/* ── Toggles ─────────────────────────────────────────────────────────────── */
+
+.fp-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.fp-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.9rem;
+  color: #444;
+  cursor: pointer;
+}
+
+.fp-toggle input[type="checkbox"] {
+  accent-color: #3d4f7c;
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+
+.fp-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #3d4f7c;
+  color: #fff;
+  border: none;
+  padding: 0.65rem 1.8rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.fp-btn-primary:hover:not(:disabled) {
+  background: #334170;
+  transform: translateY(-1px);
+}
+
+.fp-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.fp-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(61, 79, 124, 0.08);
+  color: #3d4f7c;
+  border: 1.5px solid rgba(61, 79, 124, 0.2);
+  padding: 0.55rem 1.5rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.fp-btn-secondary:hover {
+  background: rgba(61, 79, 124, 0.14);
+  border-color: rgba(61, 79, 124, 0.35);
+}
+
+/* ── Alerts ───────────────────────────────────────────────────────────────── */
+
+.fp-error {
+  background: #fef2f2;
+  color: #b91c1c;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  border: 1px solid #fecaca;
+}
+
+.fp-success {
+  background: #f0fdf4;
+  color: #15803d;
+  padding: 0.85rem 1.1rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  font-weight: 500;
+  font-size: 0.92rem;
+  border: 1px solid #bbf7d0;
+}
+
+.fp-warning {
+  background: #fffbeb;
+  color: #92400e;
+  padding: 0.85rem 1.1rem;
+  border-radius: 12px;
+  margin: 1rem 0;
+  font-size: 0.92rem;
+  border: 1px solid #fde68a;
+}
+
+/* ── Sections ────────────────────────────────────────────────────────────── */
+
+.fp-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e6e2;
+}
+
+.fp-section-title {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  color: #3d4f7c;
+  font-weight: 600;
+}
+
+.fp-section-desc {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin: 0 0 1rem;
+}
+
+/* ── Metrics ─────────────────────────────────────────────────────────────── */
+
+.fp-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.85rem;
+  margin: 1.25rem 0;
+}
+
+.fp-metric {
+  background: #f4f7f4;
+  padding: 1rem 1.1rem;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  border: 1px solid #e8ede8;
+}
+
+.fp-metric-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.fp-metric-value {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: #3d4f7c;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.fp-metric--success .fp-metric-value { color: #15803d; }
+.fp-metric--warning .fp-metric-value { color: #b45309; }
+.fp-metric--danger  .fp-metric-value { color: #dc2626; }
+
+/* ── Table ───────────────────────────────────────────────────────────────── */
+
+.fp-table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.fp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.fp-table th,
+.fp-table td {
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+  border-bottom: 1px solid #e8ede8;
+}
+
+.fp-table th {
+  background: #f4f7f4;
+  font-weight: 700;
+  color: #3d4f7c;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.fp-table tbody tr:hover {
+  background: #f8faf8;
+}
+
+.fp-table tbody tr:nth-child(even) {
+  background: #fbfcfb;
+}
+
+/* ── Chart container ─────────────────────────────────────────────────────── */
+
+.fp-chart-wrap {
+  border-radius: 14px;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+/* ── College Profile Card ────────────────────────────────────────────────── */
+
+.fp-profile-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.6rem;
+  background: linear-gradient(135deg, #f4f7f4, #edf2f8);
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #e2e6e2;
+}
+
+.fp-profile-stat {
+  text-align: center;
+}
+
+.fp-profile-stat-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.fp-profile-stat-val {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #3d4f7c;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+/* ── Admission badge ─────────────────────────────────────────────────────── */
+
+.fp-admission-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  margin-bottom: 1rem;
+}
+
+.fp-admission-badge--safety  { background: #dcfce7; color: #15803d; }
+.fp-admission-badge--match   { background: #fef3c7; color: #92400e; }
+.fp-admission-badge--reach   { background: #fee2e2; color: #dc2626; }
+.fp-admission-badge--unknown { background: #f3f4f6; color: #6b7280; }
+
+/* ── ROI section ─────────────────────────────────────────────────────────── */
+
+.fp-roi-card {
+  background: linear-gradient(135deg, #3d4f7c, #4a5f8f);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  color: #fff;
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.fp-roi-left {
+  flex: 1;
+}
+
+.fp-roi-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+  margin-bottom: 0.25rem;
+}
+
+.fp-roi-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.fp-roi-desc {
+  font-size: 0.82rem;
+  opacity: 0.8;
+  margin-top: 0.25rem;
+}
+
+.fp-roi-right {
+  text-align: right;
+}
+
+.fp-roi-earnings {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.fp-roi-label {
+  font-size: 0.72rem;
+  opacity: 0.7;
+}
+
+/* ── Projection ──────────────────────────────────────────────────────────── */
+
+.fp-projection-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.fp-projection-year {
+  background: #f4f7f4;
+  border-radius: 12px;
+  padding: 0.85rem;
+  text-align: center;
+  border: 1px solid #e8ede8;
+}
+
+.fp-projection-year-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+}
+
+.fp-projection-year-val {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #3d4f7c;
+  margin-top: 0.2rem;
+}
+
+.fp-projection-year-diff {
+  font-size: 0.72rem;
+  color: #b45309;
+  margin-top: 0.15rem;
+}
+
+.fp-projection-total {
+  background: #3d4f7c;
+  color: #fff;
+}
+
+.fp-projection-total .fp-projection-year-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.fp-projection-total .fp-projection-year-val {
+  color: #fff;
+}
+
+/* ── Loan Simulator ──────────────────────────────────────────────────────── */
+
+.fp-loan-box {
+  background: #f8faf8;
+  border: 1px solid #e2e6e2;
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin: 1rem 0;
+}
+
+.fp-loan-result {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.fp-loan-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.fp-loan-slider-row label {
+  min-width: 140px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #3d4f7c;
+}
+
+.fp-loan-slider-row input[type="range"] {
+  flex: 1;
+  accent-color: #3d4f7c;
+}
+
+.fp-loan-slider-row .fp-loan-val {
+  min-width: 80px;
+  text-align: right;
+  font-weight: 700;
+  color: #3d4f7c;
+  font-size: 0.9rem;
+}
+
+.fp-loan-pct-bar {
+  height: 8px;
+  background: #e2e6e2;
+  border-radius: 999px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+
+.fp-loan-pct-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.fp-loan-pct-fill--ok      { background: #6aab7a; }
+.fp-loan-pct-fill--warn    { background: #f59e0b; }
+.fp-loan-pct-fill--danger  { background: #dc2626; }
+
+/* ── Clickable alt row ───────────────────────────────────────────────────── */
+
+.fp-table tbody tr.fp-alt-row {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fp-table tbody tr.fp-alt-row:hover {
+  background: #edf2f8 !important;
+}
+
+.fp-alt-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.fp-alt-link {
+  font-size: 0.78rem;
+  color: #3d4f7c;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+}
+
+.fp-alt-link:hover {
+  color: #334170;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .fp-card {
+    padding: 1.5rem 1.25rem 1.5rem;
+    border-radius: 14px;
+  }
+  .fp-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+  .fp-form-row {
+    flex-direction: column;
+  }
+  .fp-profile-card {
+    grid-template-columns: 1fr 1fr;
+  }
+  .fp-roi-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  .fp-roi-right {
+    text-align: center;
+  }
+}

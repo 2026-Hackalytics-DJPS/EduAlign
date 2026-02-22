@@ -1,0 +1,458 @@
+/* ── Compare Colleges — Sage / Navy design ──────────────────────────────── */
+
+.cc-scroll {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2.5rem 1.5rem 4rem;
+  margin: -2rem -2.5rem;
+  background: #eef2ee;
+}
+
+.cc-card {
+  width: 100%;
+  max-width: 960px;
+  background: #fff;
+  border: 1px solid #e2e6e2;
+  border-radius: 20px;
+  padding: 2.5rem 2.5rem 2rem;
+  box-shadow: 0 2px 12px rgba(61, 79, 124, 0.07);
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+
+.cc-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.8rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  color: #3d4f7c;
+  font-weight: 600;
+}
+
+.cc-subtitle {
+  margin: 0 0 2rem;
+  color: #6b7280;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.95rem;
+}
+
+/* ── Dropdown row ────────────────────────────────────────────────────────── */
+
+.cc-dropdown-row {
+  margin-bottom: 1.25rem;
+}
+
+.cc-dropdown-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3d4f7c;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.35rem;
+}
+
+/* ── Selected pills ──────────────────────────────────────────────────────── */
+
+.cc-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1.5rem;
+}
+
+.cc-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(61, 79, 124, 0.08);
+  color: #3d4f7c;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.cc-pill-x {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #3d4f7c;
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+  padding: 0;
+}
+
+.cc-pill-x:hover {
+  opacity: 1;
+}
+
+/* ── Info ─────────────────────────────────────────────────────────────────── */
+
+.cc-info {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin: 0 0 1rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+/* ── Section ─────────────────────────────────────────────────────────────── */
+
+.cc-section {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e6e2;
+}
+
+.cc-section:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.cc-section-title {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  color: #3d4f7c;
+  font-weight: 600;
+}
+
+/* ── Radar wrap ──────────────────────────────────────────────────────────── */
+
+.cc-radar-wrap {
+  max-width: 500px;
+  margin: 0 auto 1.5rem;
+}
+
+.cc-radar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.cc-radar-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #555;
+}
+
+.cc-legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* ── Toggles ─────────────────────────────────────────────────────────────── */
+
+.cc-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.cc-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.9rem;
+  color: #444;
+  cursor: pointer;
+}
+
+.cc-toggle input[type="checkbox"] {
+  accent-color: #3d4f7c;
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Table ───────────────────────────────────────────────────────────────── */
+
+.cc-table-wrap {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.cc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.cc-table th,
+.cc-table td {
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+  border-bottom: 1px solid #e8ede8;
+}
+
+.cc-table th {
+  background: #f4f7f4;
+  font-weight: 700;
+  color: #3d4f7c;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cc-table tbody tr:hover {
+  background: #f8faf8;
+}
+
+.cc-table tbody tr:nth-child(even) {
+  background: #fbfcfb;
+}
+
+/* ── Chart container ─────────────────────────────────────────────────────── */
+
+.cc-chart-wrap {
+  border-radius: 14px;
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+/* ── Metric cards ────────────────────────────────────────────────────────── */
+
+.cc-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.cc-metric-card {
+  background: #f4f7f4;
+  border: 1px solid #e8ede8;
+  border-radius: 16px;
+  padding: 1.25rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.cc-metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(61, 79, 124, 0.1);
+}
+
+.cc-metric-card-name {
+  margin: 0 0 0.85rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #3d4f7c;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.cc-metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 0;
+}
+
+.cc-metric-row + .cc-metric-row {
+  border-top: 1px solid #e2e6e2;
+}
+
+.cc-metric-key {
+  font-size: 0.8rem;
+  color: #6b7280;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.cc-metric-val {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #3d4f7c;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+/* ── Loading ─────────────────────────────────────────────────────────────── */
+
+.cc-loading {
+  color: #6b7280;
+  font-size: 0.9rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  padding: 1rem 0;
+}
+
+/* ── Quick Facts ─────────────────────────────────────────────────────────── */
+
+.cc-quick-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.cc-fact-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #f4f7f4;
+  border: 1px solid #e8ede8;
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.78rem;
+  color: #555;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.cc-fact-pill strong {
+  color: #3d4f7c;
+}
+
+/* ── Affordability badge ─────────────────────────────────────────────────── */
+
+.cc-afford-badge {
+  display: inline-block;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  margin-bottom: 0.5rem;
+}
+
+.cc-afford-badge--affordable { background: #dcfce7; color: #15803d; }
+.cc-afford-badge--stretch    { background: #fef3c7; color: #92400e; }
+.cc-afford-badge--expensive  { background: #fee2e2; color: #dc2626; }
+
+/* ── Winner badge ────────────────────────────────────────────────────────── */
+
+.cc-winners {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.cc-winner-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(61, 79, 124, 0.08);
+  color: #3d4f7c;
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.cc-winner-badge::before {
+  content: "★";
+  font-size: 0.7rem;
+}
+
+/* ── Demographics bar ────────────────────────────────────────────────────── */
+
+.cc-demo-bar-wrap {
+  margin: 0.5rem 0 0.75rem;
+}
+
+.cc-demo-bar {
+  display: flex;
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.cc-demo-segment {
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.cc-demo-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+.cc-demo-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  color: #555;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.cc-demo-legend-swatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+/* ── Admission section ───────────────────────────────────────────────────── */
+
+.cc-admission-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.cc-admission-badge--safety  { background: #dcfce7; color: #15803d; }
+.cc-admission-badge--match   { background: #fef3c7; color: #92400e; }
+.cc-admission-badge--reach   { background: #fee2e2; color: #dc2626; }
+.cc-admission-badge--unknown { background: #f3f4f6; color: #6b7280; }
+
+/* ── Export button ───────────────────────────────────────────────────────── */
+
+.cc-export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(61, 79, 124, 0.08);
+  color: #3d4f7c;
+  border: 1.5px solid rgba(61, 79, 124, 0.2);
+  padding: 0.45rem 1.2rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 1rem;
+}
+
+.cc-export-btn:hover {
+  background: rgba(61, 79, 124, 0.14);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .cc-card {
+    padding: 1.5rem 1.25rem 1.5rem;
+    border-radius: 14px;
+  }
+  .cc-metric-grid {
+    grid-template-columns: 1fr;
+  }
+  .cc-radar-wrap {
+    max-width: 100%;
+  }
+  .cc-quick-facts {
+    gap: 0.3rem;
+  }
+}

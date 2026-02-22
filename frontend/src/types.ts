@@ -99,3 +99,35 @@ export interface StudentProfile {
   in_state_preference?: boolean;
   free_text?: string | null;
 }
+
+export interface AdmissionPrediction {
+  chance: number | null;
+  category: string;
+  note: string;
+}
+
+export interface EarningsPrediction {
+  median_10yr: number | null;
+  percentile: number | null;
+  note: string;
+}
+
+export interface GraduationPrediction {
+  probability: number | null;
+  note: string;
+}
+
+export interface CollegePrediction {
+  UNITID: number;
+  INSTNM: string;
+  admission: AdmissionPrediction;
+  earnings: EarningsPrediction;
+  graduation: GraduationPrediction;
+  narrative?: string;
+}
+
+export interface PredictResponse {
+  predictions: CollegePrediction[];
+  suggested_sliders: Record<string, number>;
+  used_fallback: boolean;
+}

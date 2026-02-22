@@ -3,9 +3,12 @@ import { useAuth } from "../contexts/AuthContext";
 import { EduAlignLogo } from "./EduAlignLogo";
 
 const nav = [
-  { to: "/", label: "Find Your Match" },
+  { to: "/", label: "Home" },
+  { to: "/match", label: "Find Your Match" },
   { to: "/financial", label: "Financial Planner" },
   { to: "/compare", label: "Compare Colleges" },
+  { to: "/reviews", label: "Reviews" },
+  { to: "/my-colleges", label: "My Colleges" },
 ];
 
 export function Layout() {
@@ -44,6 +47,16 @@ export function Layout() {
               {label}
             </NavLink>
           ))}
+          {user?.is_admin && (
+            <NavLink
+              to="/admin"
+              className={({ isActive }) =>
+                "nav-link" + (isActive ? " active" : "")
+              }
+            >
+              Admin
+            </NavLink>
+          )}
         </nav>
         <button
           type="button"
@@ -57,6 +70,9 @@ export function Layout() {
       <main className="main">
         <Outlet />
       </main>
+      <div className="fixed-logo-br">
+        <EduAlignLogo height={28} />
+      </div>
     </div>
   );
 }
