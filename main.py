@@ -4,12 +4,16 @@ FastAPI backend for EduAlign.
 
 import json
 import math
+import os
 from datetime import datetime, timedelta
+from pathlib import Path
 from typing import Optional
 
 import pandas as pd
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
@@ -39,7 +43,7 @@ app = FastAPI(title="EduAlign API", version="0.1.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173", "*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -1023,3 +1027,19 @@ def api_admin_profile_insights(user: User = Depends(get_current_user), db: Sessi
         "state_counts": [{"state": s, "count": c} for s, c in state_counter.most_common(15)],
         "school_size_breakdown": dict(size_counter),
     }
+
+
+# ── Serve React frontend (production) ───────────────────────────────────────
+
+STATIC_DIR = Path(__file__).resolve().parent / "frontend" / "dist"
+
+if STATIC_DIR.is_dir():
+    app.mount("/assets", StaticFiles(directory=str(STATIC_DIR / "assets")), name="assets")
+
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        """Serve the React SPA for any non-API route."""
+        file = STATIC_DIR / full_path
+        if file.is_file():
+            return FileResponse(str(file))
+        return FileResponse(str(STATIC_DIR / "index.html"))

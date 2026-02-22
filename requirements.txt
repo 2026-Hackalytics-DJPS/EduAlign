@@ -2,14 +2,9 @@ pandas
 numpy
 scikit-learn
 fastapi
-uvicorn
-streamlit
-plotly
-requests
+uvicorn[standard]
 python-dotenv
-google-generativeai
 google-auth
-nltk
 bcrypt>=4.0.1
 python-jose[cryptography]
 sqlalchemy

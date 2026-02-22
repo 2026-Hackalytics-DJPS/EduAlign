@@ -1,4 +1,3 @@
-import React from "react";
 import { EXPERIENCE_DIMS, DIMENSION_LABELS } from "../constants";
 import type { Preferences } from "../types";
 

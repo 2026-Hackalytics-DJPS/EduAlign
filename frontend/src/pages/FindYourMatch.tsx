@@ -438,13 +438,13 @@ export function FindYourMatch() {
         <div className="wiz-radar-ring wiz-radar-ring-3" />
         <div className="wiz-radar-center">
           <span className="wiz-radar-icon" key={loadingStage}>
-            {LOADING_STAGES[loadingStage].icon}
+            {LOADING_STAGES[loadingStage]!.icon}
           </span>
         </div>
       </div>
 
       <h2 className="wiz-loading-title">
-        {LOADING_STAGES[loadingStage].text}
+        {LOADING_STAGES[loadingStage]!.text}
         <span className="wiz-loading-dots">
           <span>.</span><span>.</span><span>.</span>
         </span>

@@ -179,7 +179,7 @@ function SingleCollegeReview({ unitid }: { unitid: number }) {
             <div className="rv-card-title">Experience Dimensions (avg)</div>
             <div className="rv-radar-center">
               <SvgRadar
-                series={[{ values: radarValues, color: "rgba(61,79,124,0.75)", fillColor: "rgba(61,79,124,0.15)" }]}
+                series={[{ values: radarValues, stroke: "rgba(61,79,124,0.75)", fill: "rgba(61,79,124,0.15)" }]}
                 labels={radarLabels}
                 max={10}
                 size={260}

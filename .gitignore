@@ -35,12 +35,15 @@
 # .ipynb_checkpoints/
 
 # # Environment variables
-# .env
+.env
 
 # # Local SQLite DB (auth users)
 # *.db
 # edualign.db
 
-# # Frontend
-# frontend/node_modules/
-# frontend/dist/
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Database
+*.db

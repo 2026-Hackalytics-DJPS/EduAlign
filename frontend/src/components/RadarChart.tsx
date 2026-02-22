@@ -62,7 +62,7 @@ export function RadarChart({
           line: {
             color: s.color
               ? s.color.replace(/[\d.]+\)$/, "1)")
-              : COLORS[i % COLORS.length].replace(/[\d.]+\)$/, "1)"),
+              : COLORS[i % COLORS.length]!.replace(/[\d.]+\)$/, "1)"),
             width: compact ? 1.5 : 2,
           },
           marker: { size: compact ? 3 : 5 },
