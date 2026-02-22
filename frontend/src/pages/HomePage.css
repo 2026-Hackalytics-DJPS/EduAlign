@@ -1,0 +1,396 @@
+/* ── Home Dashboard — Sage / Navy design ─────────────────────────────────── */
+
+.home-scroll {
+  position: relative;
+  min-height: 100vh;
+  padding: 2rem 1.5rem 4rem;
+  margin: -2rem -2.5rem;
+  background: #eef2ee;
+}
+
+.home-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ── Welcome bar ─────────────────────────────────────────────────────────── */
+
+.home-welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid #e2e6e2;
+  border-radius: 18px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.5rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.home-welcome-text h1 {
+  margin: 0 0 0.2rem;
+  font-size: 1.6rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  color: #3d4f7c;
+  font-weight: 600;
+}
+
+.home-welcome-text p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #6b7280;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+/* ── Progress ring ───────────────────────────────────────────────────────── */
+
+.home-progress {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.home-progress-ring {
+  position: relative;
+  width: 72px;
+  height: 72px;
+}
+
+.home-progress-ring svg {
+  transform: rotate(-90deg);
+}
+
+.home-progress-ring .ring-bg {
+  stroke: #e8ede8;
+}
+
+.home-progress-ring .ring-fill {
+  stroke: #6aab7a;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.6s ease;
+}
+
+.home-progress-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #3d4f7c;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.home-progress-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.home-progress-item {
+  font-size: 0.78rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.home-progress-item--done {
+  color: #6aab7a;
+  text-decoration: line-through;
+  text-decoration-color: rgba(106, 171, 122, 0.4);
+}
+
+.home-progress-item--todo {
+  color: #3d4f7c;
+  font-weight: 600;
+}
+
+/* ── Quick actions ───────────────────────────────────────────────────────── */
+
+.home-actions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.home-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.25rem 0.75rem;
+  background: #fff;
+  border: 1px solid #e2e6e2;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  text-decoration: none;
+}
+
+.home-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(61, 79, 124, 0.1);
+}
+
+.home-action-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.home-action-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3d4f7c;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  text-align: center;
+}
+
+/* ── Two-column layout ───────────────────────────────────────────────────── */
+
+.home-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Card base ───────────────────────────────────────────────────────────── */
+
+.home-card {
+  background: #fff;
+  border: 1px solid #e2e6e2;
+  border-radius: 16px;
+  padding: 1.25rem;
+}
+
+.home-card-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  margin: 0 0 0.75rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+/* ── Shortlist (horizontal scroll) ───────────────────────────────────────── */
+
+.home-shortlist-scroll {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+.home-shortlist-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.home-shortlist-scroll::-webkit-scrollbar-thumb {
+  background: #ccd5cc;
+  border-radius: 2px;
+}
+
+.home-shortlist-item {
+  min-width: 160px;
+  max-width: 180px;
+  flex-shrink: 0;
+  background: #f8faf8;
+  border: 1px solid #e8ede8;
+  border-radius: 12px;
+  padding: 0.85rem;
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.home-shortlist-item:hover {
+  transform: translateY(-1px);
+}
+
+.home-shortlist-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #3d4f7c;
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home-shortlist-meta {
+  font-size: 0.72rem;
+  color: #6b7280;
+}
+
+.home-shortlist-tier {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.1rem 0.4rem;
+  border-radius: 999px;
+  margin-top: 0.3rem;
+}
+
+.home-tier-dream  { background: #ede9fe; color: #6d28d9; }
+.home-tier-target { background: #dcfce7; color: #15803d; }
+.home-tier-safety { background: #fef3c7; color: #92400e; }
+
+/* ── Activity timeline ───────────────────────────────────────────────────── */
+
+.home-activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f0f3f0;
+}
+
+.home-activity-item:last-child {
+  border-bottom: none;
+}
+
+.home-activity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 0.35rem;
+  flex-shrink: 0;
+}
+
+.home-dot-match_search    { background: #818cf8; }
+.home-dot-financial_plan  { background: #f59e0b; }
+.home-dot-save_college    { background: #6aab7a; }
+.home-dot-write_review    { background: #ec4899; }
+.home-dot-profile_update  { background: #9ca3af; }
+.home-dot-signup          { background: #3d4f7c; }
+.home-dot-login           { background: #6b7db3; }
+
+.home-activity-text {
+  font-size: 0.82rem;
+  color: #374151;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.home-activity-text strong {
+  color: #3d4f7c;
+}
+
+.home-activity-date {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  margin-top: 0.1rem;
+}
+
+/* ── Featured reviews ────────────────────────────────────────────────────── */
+
+.home-review-card {
+  background: #f8faf8;
+  border: 1px solid #e8ede8;
+  border-radius: 12px;
+  padding: 0.85rem;
+  margin-bottom: 0.65rem;
+}
+
+.home-review-card:last-child {
+  margin-bottom: 0;
+}
+
+.home-review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+
+.home-review-college {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #3d4f7c;
+}
+
+.home-review-stars {
+  color: #f59e0b;
+  font-size: 0.85rem;
+}
+
+.home-review-snippet {
+  font-size: 0.8rem;
+  color: #555;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.home-review-footer {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  margin-top: 0.3rem;
+}
+
+/* ── Community stats ─────────────────────────────────────────────────────── */
+
+.home-community {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 1rem 0;
+}
+
+.home-community-stat {
+  text-align: center;
+}
+
+.home-community-val {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #3d4f7c;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.home-community-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+/* ── Empty states ────────────────────────────────────────────────────────── */
+
+.home-empty {
+  text-align: center;
+  padding: 1.5rem 0.5rem;
+  color: #9ca3af;
+  font-size: 0.85rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.home-empty-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.4rem;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .home-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .home-columns {
+    grid-template-columns: 1fr;
+  }
+  .home-welcome {
+    flex-direction: column;
+    text-align: center;
+  }
+  .home-community {
+    gap: 1.25rem;
+  }
+}

@@ -1,0 +1,1057 @@
+/* ── College Review Page — Sage / Navy design ────────────────────────────── */
+
+.rv-scroll {
+  position: relative;
+  min-height: 100vh;
+  padding: 2rem 1.5rem 4rem;
+  margin: -2rem -2.5rem;
+  background: #eef2ee;
+}
+
+.rv-inner {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.rv-loading {
+  padding: 3rem;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+.rv-muted {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+/* ── Hero (Browse page) ─────────────────────────────────────────────────── */
+
+.rv-hero {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.rv-hero-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  color: #3d4f7c;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0 0 0.3rem;
+}
+
+.rv-hero-sub {
+  color: #6b7280;
+  font-size: 0.9rem;
+  margin: 0 0 1.25rem;
+}
+
+/* ── Search ──────────────────────────────────────────────────────────────── */
+
+.rv-browse-search {
+  position: relative;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.rv-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.rv-browse-search input {
+  width: 100%;
+  padding: 0.7rem 1rem 0.7rem 2.5rem;
+  border: 1.5px solid #dde2dd;
+  border-radius: 999px;
+  font-size: 0.92rem;
+  font-family: inherit;
+  background: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.rv-browse-search input:focus {
+  outline: none;
+  border-color: #3d4f7c;
+  box-shadow: 0 0 0 3px rgba(61, 79, 124, 0.08);
+}
+
+/* ── Search results ──────────────────────────────────────────────────────── */
+
+.rv-search-results {
+  margin-bottom: 1.5rem;
+}
+
+.rv-search-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid #e2e6e2;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.rv-search-card:hover {
+  border-color: #3d4f7c;
+  box-shadow: 0 2px 8px rgba(61, 79, 124, 0.08);
+}
+
+.rv-search-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.rv-search-card-name {
+  font-weight: 700;
+  color: #3d4f7c;
+  font-size: 0.92rem;
+}
+
+.rv-search-card-loc {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  color: #6b7280;
+}
+
+.rv-search-card-arrow {
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+/* ── Section header ──────────────────────────────────────────────────────── */
+
+.rv-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.rv-section-badge {
+  opacity: 0.5;
+}
+
+/* ── Recent review wrapper ───────────────────────────────────────────────── */
+
+.rv-recent-wrap {
+  margin-bottom: 0.75rem;
+}
+
+.rv-recent-college {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #3d4f7c;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 0.3rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  transition: color 0.15s;
+}
+
+.rv-recent-college:hover {
+  color: #2e3d63;
+}
+
+/* ── Empty state ─────────────────────────────────────────────────────────── */
+
+.rv-empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: #9ca3af;
+}
+
+.rv-empty-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+
+.rv-empty-sub {
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+/* ── Back button ─────────────────────────────────────────────────────────── */
+
+.rv-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.84rem;
+  color: #3d4f7c;
+  cursor: pointer;
+  font-weight: 600;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 1rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  transition: color 0.15s;
+}
+
+.rv-back:hover {
+  color: #2e3d63;
+}
+
+/* ── Header card ─────────────────────────────────────────────────────────── */
+
+.rv-header {
+  background: #fff;
+  border: 1px solid #e2e6e2;
+  border-radius: 18px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.rv-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.rv-college-name {
+  font-size: 1.5rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  color: #3d4f7c;
+  font-weight: 600;
+  margin: 0 0 0.2rem;
+}
+
+.rv-college-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.rv-overall {
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.rv-overall-num {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #3d4f7c;
+  line-height: 1;
+}
+
+.rv-overall-count {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.2rem;
+}
+
+/* ── Star rating ─────────────────────────────────────────────────────────── */
+
+.rv-star-row {
+  display: inline-flex;
+  gap: 1px;
+  align-items: center;
+}
+
+.rv-star-filled {
+  color: #f59e0b;
+}
+
+.rv-star-empty {
+  color: #dde2dd;
+}
+
+/* ── Recommend bar ───────────────────────────────────────────────────────── */
+
+.rv-recommend-bar {
+  position: relative;
+  margin-top: 1rem;
+  background: #f0f3f0;
+  border-radius: 999px;
+  height: 32px;
+  overflow: hidden;
+}
+
+.rv-recommend-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #6aab7a, #4a8060);
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+.rv-recommend-text {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  height: 32px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #374151;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+/* ── Insights (3 cards) ──────────────────────────────────────────────────── */
+
+.rv-insights {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.rv-card {
+  background: #fff;
+  border: 1px solid #e2e6e2;
+  border-radius: 16px;
+  padding: 1.25rem;
+}
+
+.rv-card-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  margin: 0 0 0.75rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.rv-radar-center {
+  display: flex;
+  justify-content: center;
+}
+
+/* ── Rating breakdown bars ───────────────────────────────────────────────── */
+
+.rv-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.rv-breakdown-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.rv-breakdown-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #3d4f7c;
+  width: 12px;
+  text-align: right;
+}
+
+.rv-breakdown-star {
+  color: #f59e0b;
+  flex-shrink: 0;
+}
+
+.rv-breakdown-bar {
+  flex: 1;
+  height: 8px;
+  background: #f0f3f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.rv-breakdown-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b, #eab308);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.rv-breakdown-count {
+  font-size: 0.72rem;
+  color: #9ca3af;
+  width: 18px;
+}
+
+/* ── Tag cloud ───────────────────────────────────────────────────────────── */
+
+.rv-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.rv-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(61, 79, 124, 0.06);
+  color: #3d4f7c;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.rv-tag-count {
+  font-size: 0.65rem;
+  background: rgba(61, 79, 124, 0.12);
+  padding: 0.1rem 0.35rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+/* ── Controls bar ────────────────────────────────────────────────────────── */
+
+.rv-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.rv-controls-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.rv-sort {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #6b7280;
+}
+
+.rv-sort select {
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #dde2dd;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-family: inherit;
+  background: #fff;
+  cursor: pointer;
+  color: #374151;
+}
+
+.rv-sort select:focus {
+  outline: none;
+  border-color: #3d4f7c;
+}
+
+.rv-filter-stars {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.rv-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0.25rem 0.45rem;
+  border: 1px solid #dde2dd;
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #6b7280;
+  transition: all 0.15s;
+}
+
+.rv-filter-btn svg {
+  color: #f59e0b;
+}
+
+.rv-filter-btn:hover {
+  border-color: #f59e0b;
+}
+
+.rv-filter-btn.active {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #92400e;
+}
+
+.rv-filter-clear {
+  font-size: 0.72rem;
+  color: #3d4f7c;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0;
+}
+
+/* ── Results count ───────────────────────────────────────────────────────── */
+
+.rv-results-count {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+/* ── Write review button ─────────────────────────────────────────────────── */
+
+.rv-write-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #3d4f7c;
+  color: #fff;
+  border: none;
+  padding: 0.55rem 1.25rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.rv-write-btn:hover {
+  background: #2e3d63;
+}
+
+/* ── Individual review card ──────────────────────────────────────────────── */
+
+.rv-review {
+  background: #fff;
+  border: 1px solid #e2e6e2;
+  border-radius: 14px;
+  padding: 1.25rem;
+  margin-bottom: 0.75rem;
+  transition: box-shadow 0.15s;
+}
+
+.rv-review:hover {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.rv-review-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  gap: 0.75rem;
+}
+
+.rv-review-author {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.rv-review-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3d4f7c, #5a6fa0);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.rv-review-user {
+  font-weight: 700;
+  color: #3d4f7c;
+  font-size: 0.88rem;
+  display: block;
+}
+
+.rv-review-badges {
+  display: flex;
+  gap: 0.3rem;
+  margin-top: 0.15rem;
+  flex-wrap: wrap;
+}
+
+.rv-review-badge {
+  font-size: 0.65rem;
+  background: rgba(61, 79, 124, 0.06);
+  color: #6b7280;
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+.rv-review-rating-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+  flex-shrink: 0;
+}
+
+.rv-review-date {
+  font-size: 0.7rem;
+  color: #9ca3af;
+}
+
+/* ── Review body ─────────────────────────────────────────────────────────── */
+
+.rv-review-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rv-review-section {
+  /* container for pros/cons */
+}
+
+.rv-review-section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+  margin-bottom: 0.2rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.rv-review-section-label svg {
+  opacity: 0.7;
+}
+
+.rv-review-text {
+  font-size: 0.88rem;
+  color: #374151;
+  line-height: 1.55;
+}
+
+.rv-review-advice {
+  background: #f0f8f0;
+  border-left: 3px solid #6aab7a;
+  padding: 0.6rem 0.85rem;
+  border-radius: 0 10px 10px 0;
+  margin-top: 0.25rem;
+}
+
+.rv-review-advice-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #4a8060;
+  margin-bottom: 0.2rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.rv-review-advice-text {
+  font-size: 0.85rem;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.rv-review-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.5rem;
+}
+
+.rv-review-tag {
+  font-size: 0.68rem;
+  background: rgba(61, 79, 124, 0.05);
+  color: #3d4f7c;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-weight: 500;
+}
+
+/* ── Review footer ───────────────────────────────────────────────────────── */
+
+.rv-review-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.75rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid #f0f3f0;
+}
+
+.rv-review-recommend {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.rv-recommend-yes { color: #16a34a; }
+.rv-recommend-no { color: #dc2626; }
+.rv-recommend-maybe { color: #d97706; }
+
+.rv-vote-row {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.rv-vote-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  background: #f8faf8;
+  border: 1px solid #e2e6e2;
+  border-radius: 8px;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+  color: #6b7280;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+.rv-vote-btn:hover {
+  background: #edf5ed;
+  border-color: #6aab7a;
+  color: #4a8060;
+}
+
+.rv-vote-btn--down:hover {
+  background: #fef2f2;
+  border-color: #f87171;
+  color: #dc2626;
+}
+
+/* ── Write Review Wizard ─────────────────────────────────────────────────── */
+
+.wr-scroll {
+  position: relative;
+  min-height: 100vh;
+  padding: 2rem 1.5rem 4rem;
+  margin: -2rem -2.5rem;
+  background: #eef2ee;
+}
+
+.wr-inner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.wr-card {
+  background: #fff;
+  border: 1px solid #e2e6e2;
+  border-radius: 18px;
+  padding: 2rem;
+}
+
+.wr-title {
+  font-size: 1.4rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  color: #3d4f7c;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+}
+
+.wr-subtitle {
+  font-size: 0.88rem;
+  color: #6b7280;
+  margin: 0 0 1.5rem;
+}
+
+.wr-step-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  margin-bottom: 0.4rem;
+}
+
+.wr-field {
+  margin-bottom: 1.1rem;
+}
+
+.wr-field label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3d4f7c;
+  margin-bottom: 0.3rem;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.wr-field input,
+.wr-field select,
+.wr-field textarea {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #dde2dd;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-family: inherit;
+  background: #f8faf8;
+  box-sizing: border-box;
+}
+
+.wr-field textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.wr-field input:focus,
+.wr-field select:focus,
+.wr-field textarea:focus {
+  outline: none;
+  border-color: #3d4f7c;
+}
+
+.wr-stars-row {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.wr-star {
+  cursor: pointer;
+  color: #dde2dd;
+  transition: color 0.15s;
+  background: none;
+  border: none;
+  padding: 2px;
+  display: flex;
+}
+
+.wr-star--active {
+  color: #f59e0b;
+}
+
+.wr-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+
+.wr-slider-label {
+  width: 130px;
+  font-size: 0.8rem;
+  color: #3d4f7c;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.wr-slider-row input[type="range"] {
+  flex: 1;
+  accent-color: #6aab7a;
+}
+
+.wr-slider-val {
+  width: 24px;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #3d4f7c;
+}
+
+.wr-tags-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.wr-tag-chip {
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  border: 1.5px solid #dde2dd;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #555;
+}
+
+.wr-tag-chip--selected {
+  background: #3d4f7c;
+  color: #fff;
+  border-color: #3d4f7c;
+}
+
+.wr-recommend-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.wr-recommend-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.55rem;
+  border: 1.5px solid #dde2dd;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 0.88rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+  color: #555;
+}
+
+.wr-recommend-btn--selected {
+  border-color: #3d4f7c;
+  background: rgba(61, 79, 124, 0.06);
+  color: #3d4f7c;
+  font-weight: 600;
+}
+
+.wr-progress {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+  align-items: center;
+}
+
+.wr-progress-step {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: #dde2dd;
+  transition: background 0.3s;
+}
+
+.wr-progress-step--active {
+  background: #3d4f7c;
+}
+
+.wr-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.wr-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 1.5rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  transition: all 0.15s;
+  border: none;
+}
+
+.wr-btn--primary {
+  background: #3d4f7c;
+  color: #fff;
+}
+
+.wr-btn--primary:hover {
+  background: #2e3d63;
+}
+
+.wr-btn--primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.wr-btn--secondary {
+  background: transparent;
+  color: #3d4f7c;
+  border: 1.5px solid #dde2dd;
+}
+
+.wr-btn--secondary:hover {
+  border-color: #3d4f7c;
+}
+
+.wr-error {
+  background: #fef2f2;
+  color: #991b1b;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  margin-bottom: 1rem;
+}
+
+.wr-success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: #f0fdf4;
+  color: #15803d;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .rv-insights {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .rv-header-top {
+    flex-direction: column;
+  }
+  .rv-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .rv-controls-right {
+    flex-direction: column;
+  }
+  .rv-review-top {
+    flex-direction: column;
+  }
+}

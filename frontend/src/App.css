@@ -1,0 +1,550 @@
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #e8f0e8;
+}
+
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: #4a5080;
+  color: #e8e8f0;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-brand {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem 0;
+}
+
+.sidebar-tagline {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin: 0 0 1.5rem 0;
+  line-height: 1.4;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.7);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-icon {
+  width: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nav-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.nav-link.active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+}
+
+/* ── Sidebar Profile ────────────────────────────────────────────────────── */
+
+.sidebar-profile {
+  position: relative;
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sidebar-profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.5rem 0.5rem;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.85);
+  transition: background 0.15s;
+  text-align: left;
+}
+
+.sidebar-profile-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4a8060, #6ab085);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.5px;
+}
+
+.sidebar-profile-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.sidebar-profile-name {
+  font-weight: 600;
+  font-size: 0.88rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-profile-sub {
+  font-size: 0.72rem;
+  opacity: 0.65;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-chevron {
+  opacity: 0.5;
+  transition: transform 0.2s;
+  display: flex;
+  transform: rotate(180deg);
+}
+
+.sidebar-chevron.open {
+  transform: rotate(0deg);
+}
+
+.sidebar-menu {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  z-index: 50;
+  animation: menuSlide 0.15s ease-out;
+}
+
+@keyframes menuSlide {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.sidebar-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.88rem;
+  color: #333;
+  transition: background 0.12s;
+  text-align: left;
+}
+
+.sidebar-menu-item:hover {
+  background: #f0f4f0;
+}
+
+.sidebar-menu-logout:hover {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.sidebar-menu-icon {
+  font-size: 0.95rem;
+  width: 1.2rem;
+  text-align: center;
+}
+
+.sidebar-menu-divider {
+  height: 1px;
+  background: #e5e7eb;
+  margin: 0;
+}
+
+.main {
+  flex: 1;
+  padding: 2rem 2.5rem;
+  overflow-x: hidden;
+  background: #e8f0e8;
+}
+
+/* ── Page Card ──────────────────────────────────────────────────────────── */
+
+.page-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Typography ─────────────────────────────────────────────────────────── */
+
+.page h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.75rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  color: #4a5080;
+}
+
+.page h2 {
+  color: #4a5080;
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.page .subtitle {
+  color: #555;
+  margin: 0 0 1.5rem 0;
+}
+
+/* ── Sliders ────────────────────────────────────────────────────────────── */
+
+.sliders-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 2rem;
+  max-width: 560px;
+  margin-bottom: 1.5rem;
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.slider-row label {
+  min-width: 180px;
+  font-size: 0.9rem;
+}
+
+.slider-row input[type="range"],
+.profile-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: #d1d5db;
+  outline: none;
+  flex: 1;
+  min-width: 100px;
+}
+
+.slider-row input[type="range"]::-webkit-slider-thumb,
+.profile-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #4a8060;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.slider-row input[type="range"]::-moz-range-thumb,
+.profile-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #4a8060;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.slider-row input[type="range"]::-webkit-slider-runnable-track,
+.profile-slider::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, #a7d5b8, #4a8060);
+  height: 6px;
+  border-radius: 3px;
+}
+
+.slider-value {
+  font-weight: 600;
+  min-width: 1.5rem;
+  color: #4a5080;
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+
+.primary-btn {
+  background: #4a5080;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.primary-btn:hover:not(:disabled) {
+  background: #3d4370;
+}
+
+.primary-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.secondary-btn {
+  background: #e5e7eb;
+  color: #4a5080;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.secondary-btn:hover {
+  background: #d1d5db;
+}
+
+/* ── Alerts ──────────────────────────────────────────────────────────────── */
+
+.error-banner {
+  background: #fef2f2;
+  color: #b91c1c;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.success-msg {
+  color: #15803d;
+  font-weight: 500;
+  margin: 0 0 1rem 0;
+}
+
+.warning-msg {
+  color: #b45309;
+  margin: 0 0 1rem 0;
+}
+
+.info-msg {
+  color: #4b5563;
+  margin: 0 0 1rem 0;
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0 0 1rem 0;
+}
+
+/* ── Match Cards ────────────────────────────────────────────────────────── */
+
+.matches-section {
+  margin-top: 2rem;
+}
+
+/* ── Forms ───────────────────────────────────────────────────────────────── */
+
+.form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-row label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.form-row input,
+.form-row select,
+.profile-input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  min-width: 140px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.profile-input:focus {
+  outline: none;
+  border-color: #4a5080;
+  box-shadow: 0 0 0 2px rgba(74, 80, 128, 0.15);
+}
+
+.toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.toggles label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* ── Plan Results / Budget ──────────────────────────────────────────────── */
+
+.plan-results,
+.budget-tracker {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.plan-results h2,
+.budget-tracker h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+}
+
+.plan-results h3,
+.budget-tracker h3 {
+  margin: 1rem 0 0.5rem 0;
+  font-size: 1.05rem;
+}
+
+/* ── Metrics ─────────────────────────────────────────────────────────────── */
+
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.metric {
+  background: #f0f4f0;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.metric-label {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.metric-value {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #4a5080;
+}
+
+/* ── Tables ──────────────────────────────────────────────────────────────── */
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.data-table th {
+  background: #f0f4f0;
+  font-weight: 600;
+  color: #4a5080;
+}
+
+/* ── Metrics Grid (Compare) ─────────────────────────────────────────────── */
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.metric-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+  background: #fff;
+}
+
+.metric-card h3 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  color: #4a5080;
+}
+
+.metric-card p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+/* ── Sections ────────────────────────────────────────────────────────────── */
+
+section {
+  margin-bottom: 2rem;
+}
+
+section h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+}
+
+/* ── Fixed Logo ──────────────────────────────────────────────────────────── */
+
+.fixed-logo-br {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  opacity: 0.5;
+  z-index: 10;
+}

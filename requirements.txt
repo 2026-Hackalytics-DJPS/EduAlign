@@ -1,0 +1,11 @@
+pandas
+numpy
+scikit-learn
+fastapi
+uvicorn[standard]
+python-dotenv
+google-auth
+bcrypt>=4.0.1
+python-jose[cryptography]
+sqlalchemy
+groq
