@@ -222,9 +222,28 @@ def me(user: User = Depends(get_current_user)):
     return user.to_dict()
 
 
+class ScreeningUpdateRequest(BaseModel):
+    origin: str  # us, international, other
+    gpa_scale: str | None = None  # 4.0, 5.0, 6.0
+    test_type: str | None = None  # sat, act, both, none
+
+
+@router.patch("/screening")
+def update_screening(req: ScreeningUpdateRequest, user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    """Save screening choices and mark screening_complete = True."""
+    user.origin = req.origin
+    user.gpa_scale = req.gpa_scale or None
+    user.test_type = req.test_type or None
+    user.screening_complete = True
+    db.commit()
+    db.refresh(user)
+    return user.to_dict()
+
+
 class ProfileUpdateRequest(BaseModel):
     gpa: float | None = None
     sat: int | None = None
+    act: int | None = None
     intended_major: str | None = None
     preferred_state: str | None = None
     school_size: str | None = None

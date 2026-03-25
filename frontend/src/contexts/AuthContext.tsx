@@ -9,9 +9,14 @@ export interface User {
   email?: string | null;
   created_at?: string | null;
   is_admin?: boolean;
+  screening_complete?: boolean;
+  origin?: string | null;
+  gpa_scale?: string | null;
+  test_type?: string | null;
   profile_complete?: boolean;
   gpa?: number | null;
   sat?: number | null;
+  act?: number | null;
   intended_major?: string | null;
   preferred_state?: string | null;
   school_size?: string | null;

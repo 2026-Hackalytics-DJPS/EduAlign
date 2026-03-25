@@ -1,12 +1,15 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { Layout } from "./components/Layout";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { ScreeningGate } from "./components/ScreeningGate";
 import { ProfileGate } from "./components/ProfileGate";
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { ProfilePage } from "./pages/ProfilePage";
+import { ScreeningPage } from "./pages/ScreeningPage";
 import { HomePage } from "./pages/HomePage";
 import { FindYourMatch } from "./pages/FindYourMatch";
 import { FinancialPlanner } from "./pages/FinancialPlanner";
@@ -15,6 +18,8 @@ import { CollegeReviewPage } from "./pages/CollegeReviewPage";
 import { WriteReview } from "./pages/WriteReview";
 import { MyColleges } from "./pages/MyColleges";
 import { AdminPage } from "./pages/AdminPage";
+
+const MapPage = lazy(() => import("./pages/MapPage").then((m) => ({ default: m.MapPage })));
 
 function ProfilePageWrapper() {
   return (
@@ -51,12 +56,22 @@ export default function App() {
           }
         />
         <Route
+          path="/screening"
+          element={
+            <ProtectedRoute>
+              <ScreeningPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/"
           element={
             <ProtectedRoute>
-              <ProfileGate>
-                <Layout />
-              </ProfileGate>
+              <ScreeningGate>
+                <ProfileGate>
+                  <Layout />
+                </ProfileGate>
+              </ScreeningGate>
             </ProtectedRoute>
           }
         >
@@ -67,6 +82,7 @@ export default function App() {
           <Route path="reviews" element={<CollegeReviewPage />} />
           <Route path="reviews/:unitid" element={<CollegeReviewPage />} />
           <Route path="reviews/:unitid/write" element={<WriteReview />} />
+          <Route path="map" element={<Suspense fallback={<div className="page-loading">Loading map…</div>}><MapPage /></Suspense>} />
           <Route path="my-colleges" element={<MyColleges />} />
           <Route path="profile" element={<ProfilePageWrapper />} />
           <Route path="admin" element={<AdminPage />} />

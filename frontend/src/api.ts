@@ -1,6 +1,8 @@
 import { getStoredToken } from "./contexts/AuthContext";
 
-const API_BASE = "";
+/** Production API origin (e.g. https://api.example.com). Empty = same-origin or Vite dev proxy. */
+const _raw = import.meta.env.VITE_API_BASE_URL ?? "https://your-api.fly.dev/";
+const API_BASE = typeof _raw === "string" ? _raw.replace(/\/$/, "") : "";
 
 /** Extract a short, user-friendly message from FastAPI-style error JSON. */
 function parseErrorDetail(text: string): string | null {
@@ -113,6 +115,17 @@ export async function postMatch(payload: MatchPayload) {
   });
 }
 
+export async function patchScreening(payload: {
+  origin: string;
+  gpa_scale?: string | null;
+  test_type?: string | null;
+}) {
+  return fetchApi<AuthUser>("/api/auth/screening", {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
+}
+
 export async function getColleges(search = "", state = "", limit = 50) {
   const params = new URLSearchParams();
   if (search) params.set("search", search);
@@ -120,6 +133,25 @@ export async function getColleges(search = "", state = "", limit = 50) {
   params.set("limit", String(limit));
   return fetchApi<import("./types").CollegeListItem[]>(
     `/api/colleges?${params.toString()}`
+  );
+}
+
+export interface CollegeMapItem {
+  UNITID: number;
+  INSTNM: string;
+  CITY: string;
+  STABBR: string;
+  LATITUDE: number;
+  LONGITUDE: number;
+}
+
+export async function getCollegesMap(search = "", state = "", limit = 500) {
+  const params = new URLSearchParams();
+  if (search) params.set("search", search);
+  if (state) params.set("state", state);
+  params.set("limit", String(limit));
+  return fetchApi<CollegeMapItem[]>(
+    `/api/colleges/map?${params.toString()}`
   );
 }
 

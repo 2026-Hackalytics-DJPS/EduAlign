@@ -20,9 +20,16 @@ class User(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     is_admin = Column(Boolean, default=False, nullable=False)
 
+    # Screening (pre-profile)
+    screening_complete = Column(Boolean, default=False, nullable=False)
+    origin = Column(String(32), nullable=True)
+    gpa_scale = Column(String(16), nullable=True)
+    test_type = Column(String(16), nullable=True)
+
     # Profile fields (filled on first login)
     gpa = Column(Float, nullable=True)
     sat = Column(Integer, nullable=True)
+    act = Column(Integer, nullable=True)
     intended_major = Column(String(128), nullable=True)
     preferred_state = Column(String(64), nullable=True)
     school_size = Column(String(32), nullable=True)
@@ -46,9 +53,14 @@ class User(Base):
             "email": self.email,
             "created_at": created_at_str,
             "is_admin": bool(self.is_admin),
+            "screening_complete": bool(self.screening_complete),
             "profile_complete": bool(self.profile_complete),
+            "origin": self.origin,
+            "gpa_scale": self.gpa_scale,
+            "test_type": self.test_type,
             "gpa": self.gpa,
             "sat": self.sat,
+            "act": self.act,
             "intended_major": self.intended_major,
             "preferred_state": self.preferred_state,
             "school_size": self.school_size,

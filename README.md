@@ -37,5 +37,8 @@ The app is **not** dependent on gitignored files. You can clone and run without 
 
 ## Deploy
 
-- Build frontend: `cd frontend && npm run build` → serve `frontend/dist/` (or point your backend at it).
-- Backend: run `uvicorn main:app --host 0.0.0.0` (and add your frontend origin to CORS in `main.py` if needed).
+**Frontend (e.g. Cloudflare Pages):** `cd frontend && npm run build` → deploy `frontend/dist/`. In Pages, set **`VITE_API_BASE_URL`** to your public API origin (no trailing slash), e.g. `https://edualign-api.fly.dev`. The built app calls that host for `/api/...`. Leave unset only if the UI and API share the same origin (or you use a reverse proxy). `public/_redirects` enables SPA routing on Pages.
+
+**Backend:** run `uvicorn main:app --host 0.0.0.0`. Set **`CORS_ORIGINS`** to your frontend URL(s), comma-separated (e.g. `https://your-app.pages.dev,https://yourdomain.com`). Set **`DATABASE_URL`** to Postgres in production (see `.env.example`); keep using SQLite only for single-machine dev if you prefer.
+
+**Local dev:** do not set `VITE_API_BASE_URL`; Vite proxies `/api` to `http://localhost:8000` (`vite.config.ts`).

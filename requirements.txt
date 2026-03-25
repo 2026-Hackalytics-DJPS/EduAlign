@@ -8,4 +8,5 @@ google-auth
 bcrypt>=4.0.1
 python-jose[cryptography]
 sqlalchemy
+psycopg2-binary
 groq

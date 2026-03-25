@@ -3,17 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { patchProfile } from "../api";
 import { EduAlignLogo } from "../components/EduAlignLogo";
-
-const US_STATES = [
-  "Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut",
-  "Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa",
-  "Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan",
-  "Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire",
-  "New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio",
-  "Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota",
-  "Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia",
-  "Wisconsin","Wyoming",
-];
+import { COMMON_MAJORS, US_STATES } from "../constants";
 
 export function ProfilePage({ embedded = false }: { embedded?: boolean }) {
   const navigate = useNavigate();
@@ -23,7 +13,9 @@ export function ProfilePage({ embedded = false }: { embedded?: boolean }) {
 
   const [gpa, setGpa] = useState(user?.gpa ?? 3.0);
   const [sat, setSat] = useState<number | "">(user?.sat ?? "");
+  const [act, setAct] = useState<number | "">(user?.act ?? "");
   const [intendedMajor, setIntendedMajor] = useState(user?.intended_major ?? "");
+  const [customMajor, setCustomMajor] = useState("");
   const [preferredState, setPreferredState] = useState(user?.preferred_state ?? "");
   const [schoolSize, setSchoolSize] = useState<string[]>(
     user?.school_size ? user.school_size.split(", ").filter(Boolean) : []
@@ -133,19 +125,51 @@ export function ProfilePage({ embedded = false }: { embedded?: boolean }) {
             className="profile-input"
           />
         </div>
+
+        <div>
+          <label style={{ display: "block", marginBottom: 4, fontWeight: 500, fontSize: "0.9rem" }}>
+            ACT Score
+          </label>
+          <input
+            type="number"
+            min={1}
+            max={36}
+            value={act}
+            onChange={(e) => setAct(e.target.value ? parseInt(e.target.value) : "")}
+            placeholder="e.g. 28"
+            className="profile-input"
+          />
+        </div>
       </div>
 
       <div>
         <label style={{ display: "block", marginBottom: 4, fontWeight: 500, fontSize: "0.9rem" }}>
           Intended Major
         </label>
-        <input
-          type="text"
+        <select
           value={intendedMajor}
           onChange={(e) => setIntendedMajor(e.target.value)}
-          placeholder="e.g. Computer Science"
           className="profile-input"
-        />
+        >
+          <option value="">— Select a major —</option>
+          {COMMON_MAJORS.filter((m) => m !== "Other").map((m) => (
+            <option key={m} value={m}>{m}</option>
+          ))}
+          {intendedMajor && !COMMON_MAJORS.includes(intendedMajor) && (
+            <option value={intendedMajor}>{intendedMajor}</option>
+          )}
+          <option value="Other">Other</option>
+        </select>
+        {intendedMajor === "Other" && (
+          <input
+            type="text"
+            value={customMajor}
+            onChange={(e) => setCustomMajor(e.target.value)}
+            placeholder="Specify your major"
+            className="profile-input"
+            style={{ marginTop: 8 }}
+          />
+        )}
       </div>
 
       <div>

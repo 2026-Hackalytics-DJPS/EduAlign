@@ -1,8 +1,9 @@
 import React, { useState, useCallback, useEffect, useRef, useMemo } from "react";
-import { EXPERIENCE_DIMS, DIMENSION_LABELS } from "../constants";
+import { EXPERIENCE_DIMS, DIMENSION_LABELS, COMMON_MAJORS, US_STATES } from "../constants";
 import type { Preferences, MatchItem, StudentProfile } from "../types";
 import { postMatch, postSuggestSliders } from "../api";
 import { CollegeCard } from "../components/CollegeCard";
+import { MatchResultsMap } from "../components/MatchResultsMap";
 import { useAuth } from "../contexts/AuthContext";
 import { Crosshair, Search, Brain, Sparkles, Zap, WandSparkles, Check } from "lucide-react";
 import "./MatchPage.css";
@@ -86,6 +87,7 @@ export function FindYourMatch() {
   const [profile, setProfile] = useState<StudentProfile>(() => ({
     gpa: user?.gpa ?? null,
     sat: user?.sat ?? null,
+    act: user?.act ?? null,
     major: user?.intended_major ?? null,
     location: user?.preferred_state ?? null,
     extracurriculars: user?.extracurriculars ?? null,
@@ -306,23 +308,33 @@ export function FindYourMatch() {
         </div>
         <div className="wiz-field">
           <label className="wiz-label">Major / Interest</label>
-          <input
+          <select
             className="wiz-input"
-            type="text"
-            placeholder="Computer Science"
             value={profile.major ?? ""}
             onChange={(e) => setProfileField("major", e.target.value || null)}
-          />
+          >
+            <option value="">— Select a major —</option>
+            {COMMON_MAJORS.filter((m) => m !== "Other").map((m) => (
+              <option key={m} value={m}>{m}</option>
+            ))}
+            {(profile.major ?? "") && !COMMON_MAJORS.includes(profile.major ?? "") && (
+              <option value={profile.major ?? ""}>{profile.major}</option>
+            )}
+            <option value="Other">Other</option>
+          </select>
         </div>
         <div className="wiz-field">
           <label className="wiz-label">Location / State</label>
-          <input
+          <select
             className="wiz-input"
-            type="text"
-            placeholder="Georgia"
             value={profile.location ?? ""}
             onChange={(e) => setProfileField("location", e.target.value || null)}
-          />
+          >
+            <option value="">— Select a state —</option>
+            {US_STATES.map((s) => (
+              <option key={s} value={s}>{s}</option>
+            ))}
+          </select>
         </div>
         <div className="wiz-field full">
           <label className="wiz-label">Extracurriculars</label>
@@ -521,6 +533,8 @@ export function FindYourMatch() {
           Showing cosine-similarity matches — AI explanations will return once the LLM is available.
         </div>
       )}
+
+      <MatchResultsMap matches={matches} />
 
       <div className="wiz-results-grid">
         {matches.map((match, i) => (

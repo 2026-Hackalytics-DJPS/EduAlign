@@ -3,7 +3,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { EduAlignLogo } from "./EduAlignLogo";
 import {
-  Home, Crosshair, Wallet, GitCompareArrows, Star,
+  Home, Crosshair, Wallet, GitCompareArrows, Star, Map as MapIcon,
   BookMarked, ShieldCheck, User, LogOut, ChevronUp,
 } from "lucide-react";
 
@@ -12,6 +12,7 @@ const ICON_SIZE = 18;
 const nav = [
   { to: "/", label: "Home", icon: <Home size={ICON_SIZE} /> },
   { to: "/match", label: "Find Your Match", icon: <Crosshair size={ICON_SIZE} /> },
+  { to: "/map", label: "Map", icon: <MapIcon size={ICON_SIZE} /> },
   { to: "/financial", label: "Financial Planner", icon: <Wallet size={ICON_SIZE} /> },
   { to: "/compare", label: "Compare Colleges", icon: <GitCompareArrows size={ICON_SIZE} /> },
   { to: "/reviews", label: "Reviews", icon: <Star size={ICON_SIZE} /> },
@@ -47,7 +48,7 @@ export function Layout() {
     <div className="app-layout">
       <aside className="sidebar">
         <div className="sidebar-brand">
-          <EduAlignLogo height={36} dark />
+          <EduAlignLogo height={48} dark />
         </div>
         <p className="sidebar-tagline">
           Find colleges that match your experience, not just your stats.

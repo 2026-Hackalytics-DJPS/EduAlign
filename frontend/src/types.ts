@@ -93,6 +93,7 @@ export type Preferences = Record<ExperienceDim, number>;
 export interface StudentProfile {
   gpa?: number | null;
   sat?: number | null;
+  act?: number | null;
   major?: string | null;
   location?: string | null;
   extracurriculars?: string | null;

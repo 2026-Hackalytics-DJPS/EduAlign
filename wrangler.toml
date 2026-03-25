@@ -1,0 +1,12 @@
+name = "edualign-worker"
+main = "./worker/index.js"
+compatibility_date = "2026-03-24"
+
+# Still prefer CF Workers for static assets? Use Pages for frontend, and this Worker for API-proxy or custom edge logic.
+account_id = "2ba89b2084d78e0d718d4d0a719f091c"
+
+[build]
+command = "npm install"
+
+[vars]
+BACKEND_URL = "https://api.edualign.app"
