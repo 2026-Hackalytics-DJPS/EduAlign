@@ -26,6 +26,21 @@ def _clean(records: list[dict]) -> list[dict]:
                 rec[k] = None
     return records
 
+def _cors_allow_origins() -> list[str]:
+    """
+    CORS allow-list for browser origins.
+
+    Configure in production via `CORS_ORIGINS` (comma-separated).
+    Falls back to local dev origins when unset.
+    """
+    raw = os.getenv("CORS_ORIGINS", "").strip()
+    if raw:
+        return [o.strip() for o in raw.split(",") if o.strip()]
+    return [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ]
+
 from backend.activity import log_activity
 from backend.auth import router as auth_router
 from backend.auth.routes import get_current_user, get_current_user_optional
